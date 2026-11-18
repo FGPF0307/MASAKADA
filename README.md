@@ -75,7 +75,7 @@ Untuk demo, pembayarannya hanya simulasi.
 - **Supabase Storage**: tempat menyimpan foto resep dan ulasan.
 
 ### Lainnya
-- **Google Gemini**: AI di balik Chef AI, dipakai untuk chat, scan bahan, dan saran pengganti.
+- **Google Gemini**: AI di balik Chef AI, dipakai untuk chat, scan bahan, dan saran pengganti.(masih bisa berubah, ini hanya inisialisasi di awal saja)
 - **Vercel**: hosting untuk frontend.
 - **Figma**: untuk mendesain prototipe.
 
