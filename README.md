@@ -88,6 +88,6 @@ Kelompok 2 · BINUS University · Computer Science
 
 | Nama | GitHub | Peran |
 |---|---|---|
-| Farrel Ganendra P. F. | [@FGPF0307](https://github.com/FGPF0307) | _isi peran_ |
+| Farrel Ganendra P. F. | [@FGPF0307](https://github.com/FGPF0307) | Lead Developer : Membagi kerja tim dan code arsitecture, Fullstack Developer : membangun frontend serta backend |
 | _Nama anggota_ | [@username](https://github.com/username) | _isi peran_ |
 | _Nama anggota_ | [@username](https://github.com/username) | _isi peran_ |
