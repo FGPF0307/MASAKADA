@@ -1,5 +1,6 @@
-export const notFound = (_req, _res, next) =>
-  next(Object.assign(new Error('Rute tidak ditemukan.'), { status: 404 }))
+export const galat = (status, pesan) => Object.assign(new Error(pesan), { status })
+
+export const notFound = (_req, _res, next) => next(galat(404, 'Rute tidak ditemukan.'))
 
 // Format galat: { pesan } dalam Bahasa Indonesia.
 // eslint-disable-next-line no-unused-vars

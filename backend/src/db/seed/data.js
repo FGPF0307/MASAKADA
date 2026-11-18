@@ -227,7 +227,7 @@ export const resep = [
     ],
   },
   {
-    judul: 'Kari Ayam', kategori: 'Lauk', persiapan: 15, memasak: 60, kesulitan: 'sedang', pedas: 'sedang',
+    judul: 'Kari Ayam', kategori: 'Lauk', persiapan: 15, memasak: 60, kesulitan: 'sedang',
     bahan: [['Ayam', 400, 'u'], ['Santan', 200, 'u'], ['Kentang', 2, 'u'], ['Wortel', 1, 'u'], ['Kari bubuk', 15, 'u'], ['Bawang putih', 10, 'b'], ['Bawang merah', 20, 'b'], ['Garam', 5, 'b'], ['Air', 300, 'b'], ['Minyak goreng', 30, 'b']],
     langkah: [
       ['p', 'Potong 400 g ayam, 2 butir kentang, dan 1 butir wortel. Haluskan 10 g bawang putih dan 20 g bawang merah.'],

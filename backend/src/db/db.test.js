@@ -6,7 +6,7 @@ import { seed } from './seed/seed.js'
 
 test('migrasi + seed berjalan dan idempoten', async () => {
   const db = new PGlite()
-  assert.equal((await migrate(db)).length, 1)
+  assert.equal((await migrate(db)).length, 2)
   assert.equal((await migrate(db)).length, 0)
   assert.equal(await seed(db), true)
   assert.equal(await seed(db), false)

@@ -1,0 +1,55 @@
+import PilihAlat from '../components/PilihAlat'
+import PilihBahanPokok from '../components/PilihBahanPokok'
+import { Pesan, Tombol } from '../components/Form'
+import { Sakelar, Segmented, StepperKecil } from '../components/Pilihan'
+import TombolKembali from '../components/TombolKembali'
+import { useAuth } from '../context/AuthContext'
+import { usePreferences } from '../context/PreferencesContext'
+import { t } from '../copy/id'
+
+const Bagian = ({ judul, children }) => (
+  <section className="space-y-3 rounded-2xl bg-kartu p-4">
+    <h2 className="font-medium">{judul}</h2>
+    {children}
+  </section>
+)
+
+export default function Pengaturan() {
+  const { keluar } = useAuth()
+  const { profil, galat, perbarui } = usePreferences()
+  const s = t.pengaturan
+
+  return (
+    <div className="max-w-xl space-y-4">
+      <div className="flex items-center gap-3">
+        <TombolKembali ke="/profil" />
+        <h1 className="font-judul text-3xl font-bold">{s.judul}</h1>
+      </div>
+      <p className="text-sm text-neutral-500">{s.tersimpan}</p>
+      <Pesan>{galat}</Pesan>
+
+      <h2 className="pt-2 font-judul text-xl font-bold">{s.memasak}</h2>
+      <Bagian judul={s.alat}><PilihAlat termasukKompor otomatis /></Bagian>
+      <Bagian judul={s.bahanPokok}><PilihBahanPokok otomatis /></Bagian>
+      <Bagian judul={s.keahlian}>
+        <Segmented nilai={profil.level_keahlian} onChange={(v) => perbarui({ level_keahlian: v })} opsi={Object.entries(t.keahlian)} />
+      </Bagian>
+      <Bagian judul={s.porsi}>
+        <StepperKecil nilai={profil.porsi_default} onChange={(v) => perbarui({ porsi_default: v })} />
+      </Bagian>
+
+      <h2 className="pt-2 font-judul text-xl font-bold">{s.penemuan}</h2>
+      <Bagian judul={s.penemuan}>
+        <Sakelar label={s.tampilkanKurang1} nilai={profil.tampilkan_kurang1} onChange={(v) => perbarui({ tampilkan_kurang1: v })} />
+      </Bagian>
+
+      <h2 className="pt-2 font-judul text-xl font-bold">{s.notifikasi}</h2>
+      <Bagian judul={s.notifikasi}>
+        <Sakelar label={s.kabarTinjauan} nilai={profil.notif_tinjauan} onChange={(v) => perbarui({ notif_tinjauan: v })} />
+      </Bagian>
+
+      <h2 className="pt-2 font-judul text-xl font-bold">{s.akun}</h2>
+      <Tombol variant="garis" onClick={keluar}>{t.akun.keluar}</Tombol>
+    </div>
+  )
+}

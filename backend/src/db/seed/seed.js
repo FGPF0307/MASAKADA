@@ -30,9 +30,9 @@ export async function seed(db) {
 
   for (const r of d.resep) {
     const { rows: [{ id }] } = await db.query(
-      `INSERT INTO recipes (penulis_id, judul, deskripsi, kategori, menit_persiapan, menit_memasak, kesulitan, level_pedas, eksklusif, status, terbit_pada)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,'terbit',now()) RETURNING id`,
-      [SINTA_ID, r.judul, r.deskripsi ?? null, r.kategori, r.persiapan, r.memasak, r.kesulitan, r.pedas ?? 'tidak', !!r.eksklusif],
+      `INSERT INTO recipes (penulis_id, judul, deskripsi, kategori, menit_persiapan, menit_memasak, kesulitan, eksklusif, status, terbit_pada)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'terbit',now()) RETURNING id`,
+      [SINTA_ID, r.judul, r.deskripsi ?? null, r.kategori, r.persiapan, r.memasak, r.kesulitan, !!r.eksklusif],
     )
     for (const [nama, catatan] of r.alat ?? [])
       await db.query('INSERT INTO recipe_tools VALUES ($1,$2,$3)', [id, idAlat[nama], catatan])
