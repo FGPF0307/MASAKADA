@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --color-krem: #f5efe3;
+  --color-kartu: #fbf8f2;
+  --color-sage: #5b8a68;
+  --color-sage-gelap: #3f6b50;
+  --color-terakota: #c23b30;
+  --color-emas: #f4e3a8;
+  --color-kurang: #fbdcd9;
+  --color-siap: #d9ecdc;
+  --color-waktu: #1f1f1f;
+  --font-judul: "Ancizar Serif", serif;
+  --font-sans: "Poppins", system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-krem);
+  color: #1f1f1f;
+  font-family: var(--font-sans);
+}
