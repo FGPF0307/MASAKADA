@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import { readdirSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import { isiKalori } from './kalori.js'
 import { seed } from './seed/seed.js'
 
 const dir = fileURLToPath(new URL('./migrations/', import.meta.url))
@@ -24,6 +25,7 @@ if (process.argv[1]?.endsWith('migrate.js')) {
   const { pool } = await import('./pool.js')
   try {
     console.log('Migrasi baru:', (await migrate(pool)).join(', ') || '(tidak ada)')
+    await isiKalori(pool) // database yang sudah di-seed sebelum tabel kalori ada
     if (process.argv.includes('--seed')) console.log((await seed(pool)) ? 'Seed selesai.' : 'Seed dilewati (data sudah ada).')
   } finally {
     await pool.end()

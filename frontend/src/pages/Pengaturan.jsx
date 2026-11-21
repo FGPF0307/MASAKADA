@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import PilihAlat from '../components/PilihAlat'
 import PilihBahanPokok from '../components/PilihBahanPokok'
 import { Pesan, Tombol } from '../components/Form'
@@ -6,6 +7,11 @@ import TombolKembali from '../components/TombolKembali'
 import { useAuth } from '../context/AuthContext'
 import { usePreferences } from '../context/PreferencesContext'
 import { t } from '../copy/id'
+import { useState } from 'react'
+import { useUmpan } from '../components/Umpan'
+import { f } from '../copy/fitur'
+import { u } from '../copy/prinsip'
+import { aturUkuran, bacaUkuran } from '../lib/ukuranTeks'
 
 const Bagian = ({ judul, children }) => (
   <section className="space-y-3 rounded-2xl bg-kartu p-4">
@@ -18,6 +24,8 @@ export default function Pengaturan() {
   const { keluar } = useAuth()
   const { profil, galat, perbarui } = usePreferences()
   const s = t.pengaturan
+  const { tanya } = useUmpan()
+  const [ukuran, setUkuran] = useState(bacaUkuran)
 
   return (
     <div className="max-w-xl space-y-4">
@@ -27,6 +35,14 @@ export default function Pengaturan() {
       </div>
       <p className="text-sm text-neutral-500">{s.tersimpan}</p>
       <Pesan>{galat}</Pesan>
+
+      <Link to="/plus" className="flex items-center justify-between gap-3 rounded-2xl bg-emas/60 p-4">
+        <span>
+          <span className="block font-medium">{profil.paket === 'plus' ? f.paketKartu.plus : f.paketKartu.gratis}</span>
+          {profil.paket !== 'plus' && <span className="text-sm">{f.paketKartu.isi}</span>}
+        </span>
+        <span className="shrink-0 rounded-lg bg-terakota px-3 py-1.5 text-sm text-white">{profil.paket === 'plus' ? f.paketKartu.kelola : f.paketKartu.upgrade}</span>
+      </Link>
 
       <h2 className="pt-2 font-judul text-xl font-bold">{s.memasak}</h2>
       <Bagian judul={s.alat}><PilihAlat termasukKompor otomatis /></Bagian>
@@ -48,8 +64,15 @@ export default function Pengaturan() {
         <Sakelar label={s.kabarTinjauan} nilai={profil.notif_tinjauan} onChange={(v) => perbarui({ notif_tinjauan: v })} />
       </Bagian>
 
+      <h2 className="pt-2 font-judul text-xl font-bold">{u.ukuranTeks}</h2>
+      <Bagian judul={u.ukuranTeks}>
+        <Segmented nilai={ukuran} onChange={(k) => { setUkuran(k); aturUkuran(k) }} opsi={u.ukuran} />
+        <p className="text-xs text-neutral-500">{u.pintasan}</p>
+      </Bagian>
+      <Link to="/prinsip-desain" className="block rounded-2xl bg-kartu p-4 font-medium">{u.lihatPrinsip}</Link>
+
       <h2 className="pt-2 font-judul text-xl font-bold">{s.akun}</h2>
-      <Tombol variant="garis" onClick={keluar}>{t.akun.keluar}</Tombol>
+      <Tombol variant="garis" onClick={async () => { if (await tanya(u.keluar)) keluar() }}>{t.akun.keluar}</Tombol>
     </div>
   )
 }

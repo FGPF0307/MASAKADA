@@ -51,8 +51,8 @@ Untuk demo, pembayarannya hanya simulasi.
 - **Scan bahan**: cukup foto isi kulkas, nanti Chef AI mengenali bahannya. Kamu tinggal cek lalu simpan ke pantry.
 - **Pengganti bahan**: kalau ada bahan yang kurang, Chef AI bisa menyarankan penggantinya beserta takarannya.
 - **Chat Chef AI tanpa batas mingguan yang ketat**: jatah pertanyaannya jauh lebih banyak.
-- **Rencana menu mingguan**: menu untuk 7 hari disusun dari bahan yang ada di pantrymu.
-- **Kalori dan nutrisi**: setiap resep dilengkapi info gizinya.
+- **Rencana menu mingguan**: menu untuk 7 hari disusun dari bahan yang ada di pantrymu.(coming soon)
+- **Kalori dan nutrisi**: setiap resep dilengkapi info gizinya.(coming soon)
 - **Resep eksklusif**: resep khusus dari kontributor terbaik dan workshop.
 - **Workshop Zoom**: gratis satu kali tiap bulan, workshop berikutnya diskon 50%.
 - **Bebas iklan**.
@@ -81,6 +81,24 @@ Untuk demo, pembayarannya hanya simulasi.
 
 
 
+
+## Menjalankan di komputer
+
+```bash
+# Backend (terminal 1)
+cd backend && npm install && npm run db:migrate && npm run db:seed && npm start
+
+# Frontend (terminal 2)
+cd frontend && npm install && npm run dev
+```
+
+Salin `backend/.env.example` dan `frontend/.env.example` menjadi `.env`, lalu isi nilainya. Tes backend: `cd backend && npm test`.
+
+## Deploy
+
+- **Frontend (Vercel)**: root `frontend`, build `npm run build`, output `dist`. Isi `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, dan `VITE_API_URL` (alamat backend). `vercel.json` sudah mengatur rute SPA.
+- **Backend (host Node, mis. Render/Railway)**: root `backend`, start `npm start`. Isi semua variabel di `backend/.env.example`; `FRONTEND_URL` diisi alamat Vercel. Jalankan `npm run db:migrate` sekali setelah deploy.
+- **Chef AI**: tanpa `GEMINI_API_KEY` (atau `AI_MOCK=true`) jawabannya berskrip untuk demo. Pembayaran Plus, toko mitra, dan workshop adalah simulasi.
 
 ## Tim
 

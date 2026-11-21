@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { f } from '../copy/fitur'
 import TombolKembali from '../components/TombolKembali'
 import { api } from '../api/client'
 import AvatarBahan from '../components/AvatarBahan'
@@ -69,6 +70,12 @@ export default function TambahBahan() {
       <Field label={s.cari} type="search" autoFocus value={q} onChange={(e) => setQ(e.target.value)} />
       <p className="text-sm text-neutral-500">{s.catatan}</p>
       <Pesan>{galat}</Pesan>
+      {!kata && (
+        <Link to="/scan" className="flex items-center justify-between gap-3 rounded-2xl bg-kartu p-4">
+          <span><span className="block font-medium">{f.scan.judul}</span><span className="text-sm text-neutral-500">{f.scan.sub}</span></span>
+          <span className="rounded-full bg-emas px-2 py-0.5 text-[10px] font-semibold">{t.kartu.plus}</span>
+        </Link>
+      )}
 
       {kata ? (
         <ul className="space-y-2">

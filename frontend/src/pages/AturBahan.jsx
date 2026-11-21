@@ -6,7 +6,9 @@ import { Field, Pesan, Tombol } from '../components/Form'
 import { Segmented } from '../components/Pilihan'
 import TombolKembali from '../components/TombolKembali'
 import { parseAngka } from '../lib/format'
+import { useUmpan } from '../components/Umpan'
 import { t } from '../copy/id'
+import { u } from '../copy/prinsip'
 
 // Dua mode: /pantry/:id (ubah bahan di pantry) dan /pantry/tambah/:ingredientId (bahan baru ke pantry).
 export default function AturBahan() {
@@ -18,6 +20,7 @@ export default function AturBahan() {
   const [galat, setGalat] = useState('')
   const [sibuk, setSibuk] = useState(false)
   const s = t.pantry.atur
+  const { tampil, tanya } = useUmpan()
 
   useEffect(() => {
     const muat = async () => {
@@ -45,6 +48,7 @@ export default function AturBahan() {
     try {
       if (id) await api(`/pantry/${id}`, { method: 'PATCH', body: { jumlah: n, tempat } })
       else await api('/pantry', { method: 'POST', body: { ingredient_id: Number(ingredientId), jumlah: n, tempat } })
+      tampil(u.bahanDisimpan)
       go('/pantry')
     } catch (err) {
       setGalat(err.message)
@@ -53,10 +57,15 @@ export default function AturBahan() {
   }
 
   const hapus = async () => {
-    if (!window.confirm(s.konfirmasiHapus)) return
+    if (!(await tanya(u.hapusBahan))) return
     setSibuk(true)
     try {
       await api(`/pantry/${id}`, { method: 'DELETE' })
+      const kembalikan = () =>
+        api('/pantry', { method: 'POST', body: { ingredient_id: bahan.ingredient_id, jumlah: bahan.jumlah, tempat: bahan.tempat } })
+          .then(() => { tampil(u.bahanKembali); window.dispatchEvent(new Event('pantry-berubah')) })
+          .catch((e) => tampil(e.message))
+      tampil(u.bahanDihapus, { urungkan: kembalikan })
       go('/pantry')
     } catch (err) {
       setGalat(err.message)

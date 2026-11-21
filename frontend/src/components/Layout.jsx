@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { t } from '../copy/id'
+import { u } from '../copy/prinsip'
+import { BannerOffline } from './Kondisi'
 import Logo from './Logo'
 
 const Ikon = ({ children }) => (
@@ -24,7 +26,7 @@ function MenuLink({ item, samping }) {
       end={item.end}
       className={({ isActive }) =>
         samping
-          ? `flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors ${isActive ? 'bg-siap text-sage-gelap' : 'text-neutral-600 hover:bg-black/5'}`
+          ? `flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors ${isActive ? 'bg-sage-gelap text-white' : 'text-neutral-600 hover:bg-black/5'}`
           : `flex flex-1 flex-col items-center gap-1 py-1 text-[11px] font-medium transition-colors ${isActive ? 'text-sage-gelap' : 'text-neutral-500'}`
       }
     >
@@ -70,6 +72,17 @@ function PlusSheet({ onClose }) {
 
 export default function Layout() {
   const [sheet, setSheet] = useState(false)
+  const go = useNavigate()
+  // Pintasan untuk pengguna mahir: "/" membuka pencarian (kecuali saat sedang mengetik).
+  useEffect(() => {
+    const tombol = (e) => {
+      if (e.key !== '/' || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return
+      e.preventDefault()
+      go('/cari')
+    }
+    window.addEventListener('keydown', tombol)
+    return () => window.removeEventListener('keydown', tombol)
+  }, [go])
   const tombolPlus = (className, isi) => (
     <button aria-label={t.nav.tambah} onClick={() => setSheet(true)} className={`bg-terakota text-white shadow-lg active:scale-95 transition-transform ${className}`}>
       {isi}
@@ -78,13 +91,16 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen lg:flex">
-      <aside className="hidden lg:flex flex-col gap-1 w-60 shrink-0 p-5 border-r border-black/5 sticky top-0 h-screen">
-        <div className="mb-6 px-2"><Logo /></div>
+      <BannerOffline />
+      <a href="#utama" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[80] focus:rounded-xl focus:bg-white focus:px-4 focus:py-2 focus:shadow">{u.lewatiKonten}</a>
+      {/* Laptop: pil melayang di tengah atas. HP memakai bilah bawah di bawah ini. */}
+      <nav aria-label="Menu utama" className="fixed left-1/2 top-4 z-40 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-black/5 bg-kartu/90 px-3 py-2 shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur lg:flex">
+        <div className="pl-2 pr-3"><Logo /></div>
         {items.map((i) => <MenuLink key={i.to} item={i} samping />)}
-        <div className="mt-4">{tombolPlus('w-full rounded-xl py-3 text-sm font-medium', `+ ${t.nav.tambah}`)}</div>
-      </aside>
+        {tombolPlus('ml-2 rounded-full px-5 py-2 text-sm font-medium', `+ ${t.nav.tambah}`)}
+      </nav>
 
-      <main className="flex-1 pb-32 lg:pb-8 px-4 py-5 lg:px-8 mx-auto w-full max-w-[1200px]">
+      <main id="utama" tabIndex={-1} className="flex-1 outline-none pb-32 lg:pb-8 lg:pt-28 px-4 py-5 lg:px-8 mx-auto w-full max-w-[1200px]">
         <Outlet />
       </main>
 

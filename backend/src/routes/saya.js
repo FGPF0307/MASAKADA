@@ -20,6 +20,7 @@ export function buatSaya(db) {
   // Profil pengguna; dibuat otomatis saat pertama kali masuk.
   const ambil = async ({ id, nama }) => {
     await db.query('INSERT INTO profiles (id, nama) VALUES ($1,$2) ON CONFLICT (id) DO NOTHING', [id, nama])
+    await db.query("UPDATE profiles SET paket='gratis' WHERE id=$1 AND paket='plus' AND plus_sampai < now()", [id]) // percobaan/langganan berakhir
     return (await db.query('SELECT * FROM profiles WHERE id=$1', [id])).rows[0]
   }
 

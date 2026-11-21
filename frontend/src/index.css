@@ -1,21 +1,50 @@
 @import "tailwindcss";
 
 @theme {
-  --color-krem: #f5efe3;
-  --color-kartu: #fbf8f2;
-  --color-sage: #5b8a68;
-  --color-sage-gelap: #3f6b50;
-  --color-terakota: #c23b30;
-  --color-emas: #f4e3a8;
-  --color-kurang: #fbdcd9;
-  --color-siap: #d9ecdc;
-  --color-waktu: #1f1f1f;
-  --font-judul: "Ancizar Serif", serif;
-  --font-sans: "Poppins", system-ui, sans-serif;
+  /* Palet "Adonan Hangat" dari maskot: krem, hijau sage, peach, cokelat kayu. Nama token dipertahankan:
+     sage-gelap = hijau utama, sage = hijau celemek (fokus), terakota = terakota peach (tombol aksi), emas = kuning lembut. */
+  --color-krem: #fbf5e9;
+  --color-kartu: #fffdf8;
+  --color-sage: #8daa7c;
+  --color-sage-gelap: #4e7347;
+  --color-terakota: #b9553a;
+  --color-emas: #f1d9a0;
+  --color-kurang: #fbddd0;
+  --color-siap: #e1ecd8;
+  --color-waktu: #3b2a1e;
+  --font-judul: "Poppins", system-ui, sans-serif; /* judul: Poppins Bold */
+  --font-sans: "Inter", system-ui, sans-serif; /* teks isi: Inter Regular */
 }
 
 body {
   background: var(--color-krem);
-  color: #1f1f1f;
+  color: #2b2118;
   font-family: var(--font-sans);
+}
+
+/* Permukaan bawaan browser mengikuti palet. */
+::selection { background: var(--color-emas); color: var(--color-waktu); }
+html { accent-color: var(--color-sage-gelap); }
+* { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--color-sage-gelap) 30%, transparent) transparent; }
+input, textarea { caret-color: var(--color-terakota); }
+/* Baris geser horizontal (chip, rak kartu): tanpa bilah scroll, tetap bisa digeser. */
+.tanpa-bar { scrollbar-width: none; }
+.tanpa-bar::-webkit-scrollbar { display: none; }
+
+/* Satu momen bergerak: kartu resep di Beranda naik bergantian. */
+@keyframes naik { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.animate-naik { animation: naik 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Usability universal: fokus keyboard selalu terlihat; animasi dikurangi bila perangkat memintanya. */
+:focus-visible {
+  outline: 3px solid var(--color-sage-gelap);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

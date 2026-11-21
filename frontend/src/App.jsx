@@ -1,11 +1,25 @@
 import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { Pesan, Tombol } from './components/Form'
 import Layout from './components/Layout'
-import TombolKembali from './components/TombolKembali'
+import { ErrorBoundary } from './components/Kondisi'
+import { UmpanProvider } from './components/Umpan'
+import Prinsip from './pages/Prinsip'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { PreferencesProvider, usePreferences } from './context/PreferencesContext'
 import { t } from './copy/id'
+import Admin from './pages/Admin'
 import AturBahan from './pages/AturBahan'
+import Bagikan from './pages/Bagikan'
+import Pratinjau from './pages/bagikan/Pratinjau'
+import StepBahan from './pages/bagikan/StepBahan'
+import StepInfo from './pages/bagikan/StepInfo'
+import StepLangkah from './pages/bagikan/StepLangkah'
+import Terkirim from './pages/bagikan/Terkirim'
+import DetailResepSaya from './pages/DetailResepSaya'
+import Notifikasi from './pages/Notifikasi'
+import Pencapaian from './pages/Pencapaian'
+import RiwayatPoin from './pages/RiwayatPoin'
+import ResepSaya from './pages/ResepSaya'
 import Beranda from './pages/Beranda'
 import Cari from './pages/Cari'
 import DetailResep from './pages/DetailResep'
@@ -14,24 +28,29 @@ import Jelajahi from './pages/Jelajahi'
 import AturSandi from './pages/AturSandi'
 import Daftar from './pages/Daftar'
 import LupaSandi from './pages/LupaSandi'
+import MasakMode from './pages/MasakMode'
 import Masuk from './pages/Masuk'
 import Onboarding, { KUNCI_ONBOARDING } from './pages/Onboarding'
 import Pantry from './pages/Pantry'
 import Pengaturan from './pages/Pengaturan'
 import Profil from './pages/Profil'
+import Selesai from './pages/Selesai'
 import SetupBahanPokok from './pages/SetupBahanPokok'
 import SetupPantry from './pages/SetupPantry'
 import SetupPreferensi from './pages/SetupPreferensi'
 import TambahBahan from './pages/TambahBahan'
-
-// Halaman sementara; diganti per langkah di spesifikasi bagian 14.
-const Halaman = ({ judul }) => (
-  <div className="space-y-3">
-    <TombolKembali />
-    <h1 className="font-judul text-3xl font-bold">{judul}</h1>
-    <p className="text-neutral-500">{t.halaman.belumAda}</p>
-  </div>
-)
+import Ulasan from './pages/Ulasan'
+import ChefAI from './pages/ChefAI'
+import Favorit from './pages/Favorit'
+import Perencana from './pages/Perencana'
+import Plus from './pages/Plus'
+import Riwayat from './pages/Riwayat'
+import Scan from './pages/Scan'
+import TidakAda from './pages/TidakAda'
+import Workshop from './pages/Workshop'
+import WorkshopDaftar from './pages/WorkshopDaftar'
+import WorkshopDetail from './pages/WorkshopDetail'
+import WorkshopSaya from './pages/WorkshopSaya'
 
 const sudahOnboarding = () => {
   try { return !!localStorage.getItem(KUNCI_ONBOARDING) } catch { return true }
@@ -77,6 +96,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <UmpanProvider>
+        <ErrorBoundary>
         <Routes>
           <Route element={<Tamu />}>
             <Route path="onboarding" element={<Onboarding />} />
@@ -90,26 +111,51 @@ export default function App() {
             <Route path="setup/pantry" element={<SetupPantry />} />
             <Route path="setup/preferensi" element={<SetupPreferensi />} />
             <Route path="setup/bahan-pokok" element={<SetupBahanPokok />} />
+            <Route path="resep/:id/masak" element={<MasakMode />} />
+            <Route path="resep/:id/selesai" element={<Selesai />} />
             <Route element={<Layout />}>
               <Route index element={<Beranda />} />
               <Route path="resep/siap" element={<HasilResep />} />
               <Route path="cari" element={<Cari />} />
               <Route path="resep/:id" element={<DetailResep />} />
-              <Route path="resep/:id/masak" element={<Halaman judul="Mode memasak" />} />
-              <Route path="plus" element={<Halaman judul="MasakAda Plus" />} />
-              <Route path="notifikasi" element={<Halaman judul="Notifikasi" />} />
+              <Route path="resep/:id/ulasan" element={<Ulasan />} />
+              <Route path="plus" element={<Plus />} />
+              <Route path="notifikasi" element={<Notifikasi />} />
+              <Route path="pencapaian" element={<Pencapaian />} />
+              <Route path="pencapaian/riwayat" element={<RiwayatPoin />} />
               <Route path="pantry" element={<Pantry />} />
               <Route path="pantry/tambah" element={<TambahBahan />} />
               <Route path="pantry/tambah/:ingredientId" element={<AturBahan />} />
               <Route path="pantry/:id" element={<AturBahan />} />
               <Route path="jelajahi" element={<Jelajahi />} />
-              <Route path="favorit" element={<Halaman judul={t.halaman.favorit} />} />
+              <Route path="favorit" element={<Favorit />} />
+              <Route path="riwayat" element={<Riwayat />} />
+              <Route path="chef-ai" element={<ChefAI />} />
+              <Route path="scan" element={<Scan />} />
+              <Route path="perencana" element={<Perencana />} />
+              <Route path="workshop" element={<Workshop />} />
+              <Route path="workshop/saya" element={<WorkshopSaya />} />
+              <Route path="workshop/:id" element={<WorkshopDetail />} />
+              <Route path="workshop/:id/daftar" element={<WorkshopDaftar />} />
               <Route path="profil" element={<Profil />} />
               <Route path="pengaturan" element={<Pengaturan />} />
-              <Route path="bagikan/info" element={<Halaman judul={t.halaman.bagikan} />} />
+              <Route path="prinsip-desain" element={<Prinsip />} />
+              <Route path="bagikan/terkirim" element={<Terkirim />} />
+              <Route path="bagikan" element={<Bagikan />}>
+                <Route path="info" element={<StepInfo />} />
+                <Route path="bahan" element={<StepBahan />} />
+                <Route path="langkah" element={<StepLangkah />} />
+                <Route path="pratinjau" element={<Pratinjau />} />
+              </Route>
+              <Route path="resep-saya" element={<ResepSaya />} />
+              <Route path="resep-saya/:id" element={<DetailResepSaya />} />
+              <Route path="admin" element={<Admin />} />
             </Route>
           </Route>
+          <Route path="*" element={<TidakAda />} />
         </Routes>
+        </ErrorBoundary>
+        </UmpanProvider>
       </AuthProvider>
     </BrowserRouter>
   )

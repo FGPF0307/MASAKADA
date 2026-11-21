@@ -1,3 +1,4 @@
+import { isiKalori } from '../kalori.js'
 import * as d from './data.js'
 
 // Id tetap supaya Sinta (penulis resep demo) selalu sama. Akun asli dibuat lewat Supabase Auth.
@@ -60,5 +61,6 @@ export async function seed(db) {
     )
     for (const [nama, jumlah] of bahan) await db.query('INSERT INTO workshop_ingredients VALUES ($1,$2,$3)', [id, await bahanId(nama), jumlah])
   }
+  await isiKalori(db)
   return true
 }

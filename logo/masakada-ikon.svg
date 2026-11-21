@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>MasakAda</title><style>@import url('https://fonts.googleapis.com/css2?family=Ancizar+Serif:wght@700&amp;display=swap');text{font-family:'Ancizar Serif',Georgia,serif;font-weight:700}</style>
+<rect width="512" height="512" rx="112" fill="#FBF5E9"/>
+<path fill="#8DAA7C" d="M250 276C220 256 170 254 126 268V338C170 324 220 326 250 346Z"/>
+<path fill="#8DAA7C" d="M262 276C292 256 342 254 386 268V338C342 324 292 326 262 346Z"/>
+<g stroke="#FBF5E9" stroke-width="9" stroke-linecap="round"><path d="M158 296H222M158 316H210M290 296H354M302 316H354"/></g>
+<g transform="rotate(-8 250 240)"><path fill="#4E7347" d="M322 214L388 160 396 172 330 226Z"/><circle cx="386" cy="166" r="5" fill="#FBF5E9"/><path fill="#B9553A" d="M166 236C166 276 200 298 250 298C300 298 334 276 334 236Z"/><ellipse cx="250" cy="236" rx="84" ry="22" fill="#8A3E28"/><ellipse cx="250" cy="236" rx="84" ry="22" fill="none" stroke="#B9553A" stroke-width="6"/></g>
+<g transform="rotate(26 235 150)"><rect x="208" y="62" width="54" height="76" rx="18" fill="#4E7347"/><g fill="#FBF5E9"><rect x="219" y="76" width="7" height="34" rx="3.5"/><rect x="232" y="76" width="7" height="34" rx="3.5"/><rect x="245" y="76" width="7" height="34" rx="3.5"/></g><rect x="228" y="132" width="14" height="76" rx="7" fill="#4E7347"/></g>
+<g stroke="#B9553A" stroke-width="7" stroke-linecap="round"><path d="M150 150L168 164M134 176L158 184M170 130L178 148"/></g>
+<text x="256" y="424" font-size="84" text-anchor="middle"><tspan fill="#8DAA7C">Masak</tspan><tspan fill="#B9553A">Ada</tspan></text>
+<path d="M168 450Q256 440 344 450" fill="none" stroke="#8DAA7C" stroke-width="6" stroke-linecap="round" opacity=".45"/></svg>

@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { api } from '../api/client'
 import FilterSheet from '../components/FilterSheet'
 import { Pesan } from '../components/Form'
+import { IkonTutup } from '../components/Ikon'
 import KartuResep from '../components/KartuResep'
 import PantryKosong from '../components/PantryKosong'
 import TombolKembali from '../components/TombolKembali'
@@ -55,7 +56,7 @@ export default function HasilResep() {
         <div className="flex flex-wrap gap-2">
           {chip.map((c) => (
             <button key={c.kunci} onClick={() => terapkan(c.hapus)} aria-label={`${h.hapusFilter}: ${c.teks}`} className="rounded-full bg-sage-gelap px-3 py-1 text-sm text-white">
-              {c.teks} ✕
+              {c.teks} <IkonTutup className="ml-1 inline size-3.5" />
             </button>
           ))}
         </div>
