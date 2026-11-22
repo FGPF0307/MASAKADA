@@ -91,7 +91,7 @@ export default function Perencana() {
                         </span>
                       </Link>
                     ) : <p className="text-sm text-neutral-400">—</p>}
-                    <select aria-label={`${p.ganti} ${nama} ${p.waktu[s.waktu_makan]}`} value="" onFocus={muatResep} onChange={(e) => ganti(s, e.target.value)} className="w-full rounded-lg border border-black/10 bg-white px-2 py-1.5 text-sm">
+                    <select aria-label={`${p.ganti} ${nama} ${p.waktu[s.waktu_makan]}`} value="" onFocus={muatResep} onChange={(e) => ganti(s, e.target.value)} className="w-full rounded-lg border border-teks/10 bg-kartu px-2 py-1.5 text-sm">
                       <option value="">{p.ganti}…</option>
                       {resep?.map((r) => <option key={r.id} value={r.id}>{r.judul}</option>)}
                     </select>

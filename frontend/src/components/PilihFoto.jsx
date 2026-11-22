@@ -33,7 +33,7 @@ export default function PilihFoto({ url, onChange, label = t.foto.tambah }) {
           <button type="button" onClick={() => onChange(null)} aria-label={t.foto.hapus} className="absolute -right-2 -top-2 flex size-7 items-center justify-center rounded-full bg-terakota text-white shadow"><IkonTutup className="size-3.5" /></button>
         </div>
       ) : (
-        <button type="button" disabled={sibuk} onClick={() => input.current.click()} className="inline-flex items-center gap-2 rounded-2xl border border-dashed border-black/25 px-4 py-3 text-sm text-neutral-600 transition hover:bg-black/5 disabled:opacity-60">
+        <button type="button" disabled={sibuk} onClick={() => input.current.click()} className="inline-flex items-center gap-2 rounded-2xl border border-dashed border-teks/25 px-4 py-3 text-sm text-neutral-600 transition hover:bg-teks/5 disabled:opacity-60">
           {sibuk ? t.foto.mengunggah : <><IkonKamera className="size-5" />{label}</>}
         </button>
       )}

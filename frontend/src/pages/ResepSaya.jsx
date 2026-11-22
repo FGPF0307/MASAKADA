@@ -8,7 +8,7 @@ import TombolKembali from '../components/TombolKembali'
 import { t } from '../copy/id'
 import { waktuLalu } from '../lib/format'
 
-const WARNA = { draf: 'bg-black/5', ditinjau: 'bg-emas', terbit: 'bg-siap text-sage-gelap', ditolak: 'bg-kurang text-terakota' }
+const WARNA = { draf: 'bg-teks/5', ditinjau: 'bg-emas', terbit: 'bg-siap text-sage-gelap', ditolak: 'bg-kurang text-terakota' }
 
 export default function ResepSaya() {
   const [data, setData] = useState(null)

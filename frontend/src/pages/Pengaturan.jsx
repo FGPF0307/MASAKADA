@@ -11,6 +11,7 @@ import { useState } from 'react'
 import { useUmpan } from '../components/Umpan'
 import { f } from '../copy/fitur'
 import { u } from '../copy/prinsip'
+import { aturMode, aturTema, bacaMode, bacaTema } from '../lib/tema'
 import { aturUkuran, bacaUkuran } from '../lib/ukuranTeks'
 
 const Bagian = ({ judul, children }) => (
@@ -26,6 +27,8 @@ export default function Pengaturan() {
   const s = t.pengaturan
   const { tanya } = useUmpan()
   const [ukuran, setUkuran] = useState(bacaUkuran)
+  const [tema, setTema] = useState(bacaTema)
+  const [mode, setMode] = useState(bacaMode)
 
   return (
     <div className="max-w-xl space-y-4">
@@ -62,6 +65,14 @@ export default function Pengaturan() {
       <h2 className="pt-2 font-judul text-xl font-bold">{s.notifikasi}</h2>
       <Bagian judul={s.notifikasi}>
         <Sakelar label={s.kabarTinjauan} nilai={profil.notif_tinjauan} onChange={(v) => perbarui({ notif_tinjauan: v })} />
+      </Bagian>
+
+      <h2 className="pt-2 font-judul text-xl font-bold">{f.tema.judul}</h2>
+      <Bagian judul={f.tema.judul}>
+        <Segmented nilai={tema} onChange={(k) => { setTema(k); aturTema(k) }} opsi={f.tema.opsi} />
+      </Bagian>
+      <Bagian judul={f.mode.judul}>
+        <Segmented nilai={mode} onChange={(k) => { setMode(k); aturMode(k) }} opsi={f.mode.opsi} />
       </Bagian>
 
       <h2 className="pt-2 font-judul text-xl font-bold">{u.ukuranTeks}</h2>

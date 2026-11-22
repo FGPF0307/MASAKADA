@@ -62,7 +62,7 @@ export default function Pencapaian() {
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {d.lencana.map((b) => (
             <li key={b.kode} className={`space-y-2 rounded-2xl p-4 text-center ${b.didapat ? 'bg-emas/60' : 'bg-kartu'}`}>
-              <div className={`mx-auto flex size-14 items-center justify-center rounded-full text-2xl ${b.didapat ? 'bg-terakota text-white' : 'bg-black/10 text-neutral-400'}`} aria-hidden>{b.didapat ? <IkonBintang className="size-7" /> : <IkonKunci className="size-6" />}</div>
+              <div className={`mx-auto flex size-14 items-center justify-center rounded-full text-2xl ${b.didapat ? 'bg-terakota text-white' : 'bg-teks/10 text-neutral-400'}`} aria-hidden>{b.didapat ? <IkonBintang className="size-7" /> : <IkonKunci className="size-6" />}</div>
               <p className={`font-medium ${b.didapat ? '' : 'text-neutral-500'}`}>{b.nama}</p>
               <p className="text-xs text-neutral-600">{b.deskripsi}</p>
               {!b.didapat && <p className="text-xs font-medium text-neutral-500">{b.progres} / {b.target}</p>}

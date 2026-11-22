@@ -13,11 +13,11 @@ export default function KartuResep({ resep: r, label, className = '', style }) {
     <Link
       to={`/resep/${r.id}`}
       style={style}
-      className={`group block overflow-hidden rounded-3xl bg-kartu shadow-[0_2px_10px_rgba(59,42,30,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(59,42,30,0.16)] active:scale-[0.98] ${className}`}
+      className={`group block overflow-hidden rounded-3xl bg-kartu shadow-[0_2px_10px_rgba(27,20,22,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(27,20,22,0.16)] active:scale-[0.98] ${className}`}
     >
       <div className="relative overflow-hidden">
         <FotoResep resep={r} className="aspect-[4/3] transition duration-500 group-hover:scale-105" />
-        {r.foto_url && <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-waktu/45 to-transparent" aria-hidden />}
+        {r.foto_url && <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/45 to-transparent" aria-hidden />}
         <span className={`${PIL} left-3`}><IkonJam className="size-3.5" />{k.mnt(r.total)}</span>
         {r.jumlah_ulasan > 0 && <span className={`${PIL} right-3`}><IkonBintang className="size-3.5 text-terakota" />{angka(r.rating_rata)}</span>}
         {label !== undefined && (
@@ -28,9 +28,9 @@ export default function KartuResep({ resep: r, label, className = '', style }) {
         {r.eksklusif && <span className="absolute right-3 top-3 rounded-full bg-emas px-3 py-1 text-xs font-semibold">{k.plus}</span>}
       </div>
       <div className="space-y-1.5 p-4">
-        <h3 className="line-clamp-2 font-judul text-[15px] font-semibold leading-snug">{r.judul}</h3>
+        <h3 className="line-clamp-2 font-judul text-base font-semibold leading-snug">{r.judul}</h3>
         <div className="flex flex-wrap items-center gap-2 text-xs text-neutral-600">
-          <span className="rounded-full bg-black/5 px-2 py-0.5">{t.waktu[r.chip_waktu]}</span>
+          <span className="rounded-full bg-teks/5 px-2 py-0.5">{t.waktu[r.chip_waktu]}</span>
           {r.eksklusif && <span>{k.eksklusif}</span>}
         </div>
         {label === undefined && r.bahan_pantry_terpakai > 0 && <p className="text-sm font-medium text-sage-gelap">{k.pakai(r.bahan_pantry_terpakai)}</p>}

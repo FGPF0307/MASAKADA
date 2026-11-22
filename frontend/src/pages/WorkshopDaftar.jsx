@@ -55,7 +55,7 @@ export default function WorkshopDaftar() {
         <p className="font-medium">{d.judul}</p>
         <p className="text-sm text-neutral-500">{tglWib(d.mulai)}</p>
       </section>
-      <section className="space-y-1 rounded-2xl bg-white p-4">
+      <section className="space-y-1 rounded-2xl bg-kartu p-4">
         <p className="text-sm text-neutral-500">{w.tiket}</p>
         <p className="font-medium">{d.tiket.jenis === 'plus' ? w.tiketPlus : d.tiket.harga < d.harga ? w.diskonPlus : w.reguler}</p>
         <p className="text-sm text-neutral-500">{w.regulerIsi}</p>

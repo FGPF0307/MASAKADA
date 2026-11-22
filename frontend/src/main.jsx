@@ -2,8 +2,10 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import { terapkanTema } from './lib/tema'
 import { terapkanUkuran } from './lib/ukuranTeks'
 
+terapkanTema() // tema warna pilihan pengguna
 terapkanUkuran() // ukuran teks pilihan pengguna
 
 // PWA: cangkang aplikasi bisa dibuka offline (hanya di build produksi).

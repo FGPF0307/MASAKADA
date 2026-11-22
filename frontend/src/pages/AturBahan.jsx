@@ -91,7 +91,7 @@ export default function AturBahan() {
         <div className="flex-1">
           <Field label={s.jumlah} inputMode="decimal" required autoFocus value={jumlah} onChange={(e) => setJumlah(e.target.value)} />
         </div>
-        <span className="mb-3 rounded-xl bg-black/5 px-4 py-3 font-medium" title={s.satuanTerkunci}>{bahan.satuan}</span>
+        <span className="mb-3 rounded-xl bg-teks/5 px-4 py-3 font-medium" title={s.satuanTerkunci}>{bahan.satuan}</span>
       </div>
 
       <div className="space-y-2">

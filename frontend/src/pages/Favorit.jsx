@@ -58,7 +58,7 @@ export default function Favorit() {
 
       {baru !== null && (
         <form onSubmit={buat} className="flex gap-2">
-          <input autoFocus value={baru} onChange={(e) => setBaru(e.target.value)} maxLength={60} placeholder={k.namaKoleksi} aria-label={k.namaKoleksi} className="min-w-0 flex-1 rounded-xl border border-black/10 bg-white px-4 py-3 outline-none focus:border-sage" />
+          <input autoFocus value={baru} onChange={(e) => setBaru(e.target.value)} maxLength={60} placeholder={k.namaKoleksi} aria-label={k.namaKoleksi} className="min-w-0 flex-1 rounded-xl border border-teks/10 bg-kartu px-4 py-3 outline-none focus:border-sage" />
           <button className="rounded-xl bg-sage-gelap px-4 text-white disabled:opacity-60" disabled={!baru.trim()}>{k.buat}</button>
           <button type="button" onClick={() => setBaru(null)} className="px-2 text-neutral-500">{k.batal}</button>
         </form>

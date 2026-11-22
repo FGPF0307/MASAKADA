@@ -2,7 +2,7 @@ import { Component, useEffect, useState } from 'react'
 import { f } from '../copy/fitur'
 
 // Kondisi layar (spesifikasi 8.13): memuat (skeleton), galat, offline.
-export const Skeleton = ({ className = '' }) => <div aria-hidden className={`animate-pulse rounded-2xl bg-black/10 ${className}`} />
+export const Skeleton = ({ className = '' }) => <div aria-hidden className={`animate-pulse rounded-2xl bg-teks/10 ${className}`} />
 
 export const SkeletonKartu = ({ n = 3 }) => (
   <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -23,11 +23,11 @@ export const Memuat = ({ pesan = f.kondisi.memuat, n }) => (
 )
 
 const Panci = () => (
-  <svg viewBox="0 0 96 96" className="mx-auto size-24" aria-hidden>
-    <path d="M20 46h56v20a14 14 0 0 1-14 14H34a14 14 0 0 1-14-14z" fill="#3a2f2a" />
-    <rect x="14" y="40" width="68" height="9" rx="4.5" fill="#5a4a42" />
-    <path d="M12 56h8M76 56h8" stroke="#5a4a42" strokeWidth="5" strokeLinecap="round" />
-    <path d="M36 32c-6-6 6-8 0-16M50 32c-6-6 6-8 0-16M64 32c-6-6 6-8 0-16" stroke="#9a948c" strokeWidth="3" fill="none" strokeLinecap="round" />
+  <svg viewBox="0 0 96 96" className="mx-auto size-24 text-waktu" aria-hidden>
+    <path d="M20 46h56v20a14 14 0 0 1-14 14H34a14 14 0 0 1-14-14z" fill="currentColor" />
+    <rect x="14" y="40" width="68" height="9" rx="4.5" fill="currentColor" opacity=".7" />
+    <path d="M12 56h8M76 56h8" stroke="currentColor" opacity=".7" strokeWidth="5" strokeLinecap="round" />
+    <path d="M36 32c-6-6 6-8 0-16M50 32c-6-6 6-8 0-16M64 32c-6-6 6-8 0-16" stroke="currentColor" opacity=".45" strokeWidth="3" fill="none" strokeLinecap="round" />
   </svg>
 )
 

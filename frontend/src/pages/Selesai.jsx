@@ -82,14 +82,14 @@ export default function Selesai() {
                 <div className="flex items-center gap-3">
                   <span className="min-w-0 flex-1 font-medium">
                     {i.nama}
-                    {i.opsional && <span className="ml-2 rounded-full bg-black/5 px-2 py-0.5 text-xs font-normal">{s.opsional}</span>}
+                    {i.opsional && <span className="ml-2 rounded-full bg-teks/5 px-2 py-0.5 text-xs font-normal">{s.opsional}</span>}
                   </span>
                   <input
                     inputMode="decimal"
                     aria-label={`${i.nama} (${i.satuan})`}
                     value={nilai[i.ingredient_id] ?? ''}
                     onChange={(e) => setNilai((n) => ({ ...n, [i.ingredient_id]: e.target.value }))}
-                    className={`w-24 rounded-lg border bg-white px-3 py-2 text-right ${ok ? 'border-black/10' : 'border-terakota'}`}
+                    className={`w-24 rounded-lg border bg-kartu px-3 py-2 text-right ${ok ? 'border-teks/10' : 'border-terakota'}`}
                   />
                   <span className="w-10 text-sm text-neutral-500">{i.satuan}</span>
                 </div>
@@ -104,7 +104,7 @@ export default function Selesai() {
 
       <Pesan>{galat}</Pesan>
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-black/5 bg-krem/95 px-4 py-3">
+      <div className="fixed inset-x-0 bottom-0 border-t border-teks/5 bg-krem/95 px-4 py-3">
         <div className="mx-auto flex max-w-2xl gap-3">
           <Tombol variant="garis" className="flex-1" disabled={sibuk} onClick={() => kirim({ lewati: true })}>{s.lewati}</Tombol>
           <Tombol className="flex-[2]" disabled={sibuk || !semuaValid} onClick={simpan}>{s.simpan}</Tombol>

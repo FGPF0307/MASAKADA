@@ -12,7 +12,7 @@ import { useUmpan } from '../components/Umpan'
 import { u } from '../copy/prinsip'
 
 const Baris = ({ to, children, sisi }) => (
-  <Link to={to} className="flex items-center justify-between gap-3 rounded-2xl bg-kartu p-4 font-medium shadow-[0_1px_6px_rgba(59,42,30,0.06)] transition active:scale-[0.99]">
+  <Link to={to} className="flex items-center justify-between gap-3 rounded-2xl bg-kartu p-4 font-medium shadow-[0_1px_6px_rgba(27,20,22,0.06)] transition active:scale-[0.99]">
     <span>{children}</span>
     <span className="flex items-center gap-2">
       {sisi && <span className="rounded-full bg-emas px-2 py-0.5 text-[10px] font-semibold">{sisi}</span>}

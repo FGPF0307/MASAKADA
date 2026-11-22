@@ -46,7 +46,7 @@ export default function SheetKoleksi({ recipeId, onTutup, onSimpan }) {
       <ul className="space-y-2">
         {daftar?.map((x) => (
           <li key={x.id}>
-            <button onClick={() => ubah(x)} aria-pressed={x.ada} className={`flex w-full items-center justify-between rounded-xl p-3 text-left ${x.ada ? 'bg-siap text-sage-gelap' : 'bg-white'}`}>
+            <button onClick={() => ubah(x)} aria-pressed={x.ada} className={`flex w-full items-center justify-between rounded-xl p-3 text-left ${x.ada ? 'bg-siap text-sage-gelap' : 'bg-kartu'}`}>
               <span>{x.nama} <span className="text-sm text-neutral-500">· {k.resep(x.jumlah)}</span></span>
               <span aria-hidden>{x.ada ? <IkonCentang className="size-5" /> : '+'}</span>
             </button>
@@ -54,7 +54,7 @@ export default function SheetKoleksi({ recipeId, onTutup, onSimpan }) {
         ))}
       </ul>
       <form onSubmit={buat} className="flex gap-2">
-        <input value={baru} onChange={(e) => setBaru(e.target.value)} maxLength={60} placeholder={k.namaKoleksi} aria-label={k.namaKoleksi} className="min-w-0 flex-1 rounded-xl border border-black/10 bg-white px-4 py-3 outline-none focus:border-sage" />
+        <input value={baru} onChange={(e) => setBaru(e.target.value)} maxLength={60} placeholder={k.namaKoleksi} aria-label={k.namaKoleksi} className="min-w-0 flex-1 rounded-xl border border-teks/10 bg-kartu px-4 py-3 outline-none focus:border-sage" />
         <button className="rounded-xl bg-sage-gelap px-4 text-white disabled:opacity-60" disabled={!baru.trim()}>{k.buat}</button>
       </form>
       <button onClick={onTutup} className="w-full py-2 text-neutral-500">{k.selesai}</button>

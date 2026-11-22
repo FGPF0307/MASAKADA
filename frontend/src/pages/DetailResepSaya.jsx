@@ -26,7 +26,7 @@ export default function DetailResepSaya() {
     if (!window.confirm(d.konfirmasiHapus)) return
     try { await api(`/resep-saya/${id}`, { method: 'DELETE' }); go('/resep-saya', { replace: true }) } catch (e) { setGalat(e.message) }
   }
-  const ikon = { ditolak: ['!', 'bg-kurang text-terakota'], ditinjau: ['…', 'bg-emas'], terbit: ['✓', 'bg-siap text-sage-gelap'], draf: ['✎', 'bg-black/5'] }[r.status]
+  const ikon = { ditolak: ['!', 'bg-kurang text-terakota'], ditinjau: ['…', 'bg-emas'], terbit: ['✓', 'bg-siap text-sage-gelap'], draf: ['✎', 'bg-teks/5'] }[r.status]
 
   return (
     <div className="mx-auto max-w-xl space-y-5">

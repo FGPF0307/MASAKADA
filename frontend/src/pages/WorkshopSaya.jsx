@@ -42,7 +42,7 @@ export default function WorkshopSaya() {
                 {x.pantry && <p className="text-sm text-neutral-600">{w.bahanAda(x.pantry.ada, x.pantry.total)}</p>}
                 {x.bisa_gabung
                   ? <a href={x.tautan_zoom} target="_blank" rel="noreferrer" className="block rounded-xl bg-terakota py-3 text-center font-medium text-white">{w.gabung}</a>
-                  : <p className="rounded-xl bg-black/5 py-3 text-center text-sm text-neutral-500">{w.dibuka}</p>}
+                  : <p className="rounded-xl bg-teks/5 py-3 text-center text-sm text-neutral-500">{w.dibuka}</p>}
               </li>
             ))}
           </ul>

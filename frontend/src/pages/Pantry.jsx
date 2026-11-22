@@ -35,7 +35,7 @@ export default function Pantry() {
           {items && <p className="text-sm text-neutral-500">{s.jumlahBahan(items.length)}</p>}
         </div>
         <div className="flex items-center gap-2">
-          <Link to="/scan" aria-label={f.scan.judul} className="flex size-11 items-center justify-center rounded-full bg-kartu text-sage-gelap shadow-[0_1px_6px_rgba(59,42,30,0.1)] transition active:scale-95"><IkonKamera className="size-6" /></Link>
+          <Link to="/scan" aria-label={f.scan.judul} className="flex size-11 items-center justify-center rounded-full bg-kartu text-sage-gelap shadow-[0_1px_6px_rgba(27,20,22,0.1)] transition active:scale-95"><IkonKamera className="size-6" /></Link>
           <Link to="/pantry/tambah" aria-label={t.plus.tambahBahan} className="flex size-11 items-center justify-center rounded-full bg-terakota text-2xl text-white shadow">+</Link>
         </div>
       </header>
@@ -53,7 +53,7 @@ export default function Pantry() {
           <ul className="grid gap-3 md:grid-cols-2">
             {tampil?.map((i) => (
               <li key={i.id}>
-                <Link to={`/pantry/${i.id}`} className="flex items-center gap-3 rounded-2xl bg-kartu p-3 shadow-[0_1px_6px_rgba(59,42,30,0.06)] transition active:scale-[0.99]">
+                <Link to={`/pantry/${i.id}`} className="flex items-center gap-3 rounded-2xl bg-kartu p-3 shadow-[0_1px_6px_rgba(27,20,22,0.06)] transition active:scale-[0.99]">
                   <AvatarBahan nama={i.nama} />
                   <span className="min-w-0 flex-1">
                     <span className="block truncate font-medium">{i.nama}</span>

@@ -41,7 +41,7 @@ export default function StepInfo() {
       <Field label={b.judulResep} maxLength={150} value={draf.judul} onChange={(e) => ubah({ judul: e.target.value })} />
       <label className="block space-y-1">
         <span className="text-sm text-neutral-600">{b.deskripsi}</span>
-        <textarea rows={2} maxLength={500} value={draf.deskripsi ?? ''} onChange={(e) => ubah({ deskripsi: e.target.value || null })} className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 outline-none focus:border-sage" />
+        <textarea rows={2} maxLength={500} value={draf.deskripsi ?? ''} onChange={(e) => ubah({ deskripsi: e.target.value || null })} className="w-full rounded-xl border border-teks/10 bg-kartu px-4 py-3 outline-none focus:border-sage" />
       </label>
 
       <section className="flex items-center justify-between rounded-2xl bg-kartu p-4">

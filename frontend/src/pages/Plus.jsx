@@ -56,11 +56,11 @@ export default function Plus() {
       )}
 
       <div className="overflow-hidden rounded-2xl bg-kartu">
-        <div className="grid grid-cols-[1.6fr_1fr_1fr] bg-black/5 px-3 py-2 text-xs font-semibold">
+        <div className="grid grid-cols-[1.6fr_1fr_1fr] bg-teks/5 px-3 py-2 text-xs font-semibold">
           <span>{p.fitur}</span><span>{p.gratis}</span><span className="text-sage-gelap">{p.plus}</span>
         </div>
         {p.baris.map(([nama, g, pl]) => (
-          <div key={nama} className="grid grid-cols-[1.6fr_1fr_1fr] gap-1 border-t border-black/5 px-3 py-2 text-sm">
+          <div key={nama} className="grid grid-cols-[1.6fr_1fr_1fr] gap-1 border-t border-teks/5 px-3 py-2 text-sm">
             <span>{nama}</span><span className="text-neutral-500">{g}</span><span className="font-medium text-sage-gelap">{pl}</span>
           </div>
         ))}

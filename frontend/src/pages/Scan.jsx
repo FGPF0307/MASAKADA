@@ -107,7 +107,7 @@ export default function Scan() {
                   <span className="block truncate font-medium">{x.nama}</span>
                   {!x.yakin && <span className="text-xs text-terakota">{s.tidakYakin}</span>}
                 </span>
-                <input inputMode="decimal" value={x.teks} onChange={(e) => ubah(i, { teks: e.target.value })} aria-label={`${s.jumlah} ${x.nama}`} className="w-20 rounded-lg border border-black/10 bg-white px-2 py-2 text-right" />
+                <input inputMode="decimal" value={x.teks} onChange={(e) => ubah(i, { teks: e.target.value })} aria-label={`${s.jumlah} ${x.nama}`} className="w-20 rounded-lg border border-teks/10 bg-kartu px-2 py-2 text-right" />
                 <span className="w-9 text-sm text-neutral-500">{x.satuan}</span>
               </li>
             ))}

@@ -15,7 +15,7 @@ export default function SetupBingkai({ n, judul, isi, tombol, onLanjut, sibuk, g
       <h1 className="mt-1 font-judul text-3xl font-bold">{judul}</h1>
       {isi && <p className="mt-2 text-neutral-600">{isi}</p>}
       <div className="mt-6 space-y-6">{children}</div>
-      <div className="fixed bottom-0 inset-x-0 bg-krem/95 border-t border-black/5 px-4 py-3">
+      <div className="fixed bottom-0 inset-x-0 bg-krem/95 border-t border-teks/5 px-4 py-3">
         <div className="max-w-xl mx-auto space-y-2">
           <Pesan>{galat}</Pesan>
           <Tombol onClick={onLanjut} disabled={sibuk}>{tombol}</Tombol>

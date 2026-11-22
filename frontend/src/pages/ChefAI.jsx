@@ -65,7 +65,7 @@ export default function ChefAI() {
           <li key={m.id} className={`max-w-[85%] space-y-2 rounded-2xl px-4 py-3 text-sm ${m.peran === 'user' ? 'ml-auto bg-sage-gelap text-white' : 'bg-kartu'}`}>
             <p className="whitespace-pre-wrap">{m.isi}</p>
             {m.kartu?.map((k) => (
-              <Link key={k.id} to={`/resep/${k.id}`} className="flex items-center gap-2 rounded-xl bg-white p-2 text-neutral-800">
+              <Link key={k.id} to={`/resep/${k.id}`} className="flex items-center gap-2 rounded-xl bg-kartu p-2 text-neutral-800">
                 {k.foto_url ? <img src={k.foto_url} alt="" className="size-12 rounded-lg object-cover" /> : <span className="size-12 rounded-lg bg-siap" aria-hidden />}
                 <span className="min-w-0 flex-1"><span className="block truncate font-medium">{k.judul}</span><span className="text-xs text-neutral-500">{k.total} mnt · {c.lihatResep}</span></span>
               </Link>
@@ -78,7 +78,7 @@ export default function ChefAI() {
 
       {pesan.length === 0 && !habis && (
         <div className="flex flex-wrap gap-2">
-          {c.saran.map((s) => <button key={s} onClick={() => kirim(s)} className="rounded-full border border-black/10 bg-kartu px-3 py-2 text-sm">{s}</button>)}
+          {c.saran.map((s) => <button key={s} onClick={() => kirim(s)} className="rounded-full border border-teks/10 bg-kartu px-3 py-2 text-sm">{s}</button>)}
         </div>
       )}
 
@@ -91,7 +91,7 @@ export default function ChefAI() {
       )}
 
       <form onSubmit={(e) => { e.preventDefault(); kirim(teks) }} className="sticky bottom-28 flex gap-2 lg:bottom-4">
-        <input value={teks} onChange={(e) => setTeks(e.target.value)} disabled={habis || sibuk} maxLength={500} placeholder={c.placeholder} aria-label={c.placeholder} className="min-w-0 flex-1 rounded-xl border border-black/10 bg-white px-4 py-3 shadow outline-none focus:border-sage disabled:opacity-60" />
+        <input value={teks} onChange={(e) => setTeks(e.target.value)} disabled={habis || sibuk} maxLength={500} placeholder={c.placeholder} aria-label={c.placeholder} className="min-w-0 flex-1 rounded-xl border border-teks/10 bg-kartu px-4 py-3 shadow outline-none focus:border-sage disabled:opacity-60" />
         <button disabled={habis || sibuk || !teks.trim()} className="rounded-xl bg-terakota px-5 font-medium text-white shadow disabled:opacity-60">{c.kirim}</button>
       </form>
       <p className="text-center text-xs text-neutral-400">{c.catatan}</p>

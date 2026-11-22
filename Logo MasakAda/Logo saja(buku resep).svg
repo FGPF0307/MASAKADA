@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="512" height="512" fill="none"><defs><clipPath id="masakada-frame-clip"><rect x="0" y="0" width="120" height="120" rx="28" ry="28" /></clipPath></defs>
+    <g clip-path="url(#masakada-frame-clip)">
+      <rect x="0" y="0" width="120" height="120" rx="28" fill="#6E1F2F" />
+      <g transform="translate(16.80, 16.80) scale(0.7200)">
+        
+        <!-- Left Open Page -->
+        <path
+          d="M18 26C33 23 48 25.5 57.5 31.5V91C48.5 85.5 33 83.5 18 86.5V26Z"
+          fill="#F8F5F0"
+        />
+        <!-- Right Open Page -->
+        <path
+          d="M102 26C87 23 72 25.5 62.5 31.5V91C71.5 85.5 87 83.5 102 86.5V26Z"
+          fill="#F8F5F0"
+        />
+        <!-- Recipe lines on left page -->
+        <path
+          d="M27 42H48M27 54H48M27 66H42"
+          stroke="#6E1F2F"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <!-- Bookmark Ribbon on right page -->
+        <path
+          d="M74 26V55L81.5 49L89 55V25"
+          fill="#EDE6DD"
+        />
+        <!-- Lines below bookmark on right page -->
+        <path
+          d="M71 67H92M71 77H86"
+          stroke="#6E1F2F"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <!-- Book Spine & Cover Cradle -->
+        <path
+          d="M14 91C32 88.5 48 91.5 60 98C72 91.5 88 88.5 106 91"
+          stroke="#EDE6DD"
+          stroke-width="6.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          fill="none"
+        />
+      
+      </g>
+    </g>
+  </svg>

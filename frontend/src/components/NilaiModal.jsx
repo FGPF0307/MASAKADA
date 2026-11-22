@@ -53,7 +53,7 @@ export default function NilaiModal({ resep, awal, onSelesai, onTutup }) {
             maxLength={1000}
             value={komentar}
             onChange={(e) => setKomentar(e.target.value)}
-            className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 outline-none focus:border-sage"
+            className="w-full rounded-xl border border-teks/10 bg-kartu px-4 py-3 outline-none focus:border-sage"
           />
         </label>
 

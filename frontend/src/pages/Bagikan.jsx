@@ -104,7 +104,7 @@ export default function Bagikan() {
         </div>
         {n > 0 && (
           <div className="flex gap-1.5" aria-hidden>
-            {LANGKAH.map((x, i) => <span key={x} className={`h-1.5 flex-1 rounded-full ${i < n ? 'bg-sage-gelap' : 'bg-black/10'}`} />)}
+            {LANGKAH.map((x, i) => <span key={x} className={`h-1.5 flex-1 rounded-full ${i < n ? 'bg-sage-gelap' : 'bg-teks/10'}`} />)}
           </div>
         )}
       </header>

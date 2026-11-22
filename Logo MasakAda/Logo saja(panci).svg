@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="512" height="512" fill="none"><defs><clipPath id="masakada-frame-clip"><rect x="0" y="0" width="120" height="120" rx="28" ry="28" /></clipPath></defs>
+    <g clip-path="url(#masakada-frame-clip)">
+      <rect x="0" y="0" width="120" height="120" rx="28" fill="#6E1F2F" />
+      <g transform="translate(16.80, 16.80) scale(0.7200)">
+        
+        <!-- Energetic Flame rising above the side-view pot -->
+        <path
+          d="M47 15C47 15 63.5 28.5 63.5 42C63.5 51.2 56.1 57.5 47 57.5C37.9 57.5 30.5 51.2 30.5 42C30.5 34.5 36.2 27.5 39 23.5C39.8 28.2 42.8 30.5 42.8 30.5C42.8 23.5 47 15 47 15Z"
+          fill="#EDE6DD"
+        />
+        <!-- Inner flame core cutout -->
+        <path
+          d="M47 33.5C47 33.5 54 39.5 54 45C54 49 50.9 52 47 52C43.1 52 40 49 40 45C40 41 43.4 36.5 47 33.5Z"
+          fill="#6E1F2F"
+        />
+        <!-- Side-view pot rim -->
+        <path
+          d="M14 62H80"
+          stroke="#F8F5F0"
+          stroke-width="6.5"
+          stroke-linecap="round"
+        />
+        <!-- Side-view pot body -->
+        <path
+          d="M18 64H76V83C76 91.5 69.2 98 60.5 98H33.5C24.8 98 18 91.5 18 83V64Z"
+          fill="#F8F5F0"
+        />
+        <!-- Long ergonomic handle extending to the right -->
+        <path
+          d="M76 68L104 61.5"
+          stroke="#F8F5F0"
+          stroke-width="8.5"
+          stroke-linecap="round"
+        />
+        <!-- Base burner accent bar -->
+        <path
+          d="M28 105H66"
+          stroke="#EDE6DD"
+          stroke-width="5.5"
+          stroke-linecap="round"
+        />
+      
+      </g>
+    </g>
+  </svg>

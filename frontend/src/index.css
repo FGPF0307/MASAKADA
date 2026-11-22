@@ -1,8 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palet "Adonan Hangat" dari maskot: krem, hijau sage, peach, cokelat kayu. Nama token dipertahankan:
-     sage-gelap = hijau utama, sage = hijau celemek (fokus), terakota = terakota peach (tombol aksi), emas = kuning lembut. */
+  /* Tema bawaan: "Ivory Burgundy". Nama token dipertahankan supaya semua kelas yang ada ikut berubah:
+     krem = latar, kartu = permukaan kartu, sage-gelap = aksen utama (burgundy), terakota = tombol aksi,
+     sage = aksen redup, emas = sorotan, kurang/siap = latar status, waktu/teks = teks gelap. */
+  --color-krem: #f8f5f0;
+  --color-kartu: #fffdfb;
+  --color-sage: #9a8f89;
+  --color-sage-gelap: #6e1f2f;
+  --color-terakota: #8e2b3c;
+  --color-emas: #e6d3a3;
+  --color-kurang: #f2dcdf;
+  --color-siap: #e3e8db;
+  --color-waktu: #1b1416;
+  --color-teks: #1b1416;
+  --font-judul: "Poppins", system-ui, sans-serif; /* judul: Poppins Bold */
+  --font-sans: "Inter", system-ui, sans-serif; /* teks isi: Inter Regular */
+}
+
+/* Tema cadangan "Adonan Hangat" (krem, hijau sage, peach, cokelat kayu; dari maskot). Dipilih di Pengaturan → Tema warna. */
+html[data-tema='adonan'] {
   --color-krem: #fbf5e9;
   --color-kartu: #fffdf8;
   --color-sage: #8daa7c;
@@ -12,13 +29,55 @@
   --color-kurang: #fbddd0;
   --color-siap: #e1ecd8;
   --color-waktu: #3b2a1e;
-  --font-judul: "Poppins", system-ui, sans-serif; /* judul: Poppins Bold */
-  --font-sans: "Inter", system-ui, sans-serif; /* teks isi: Inter Regular */
+  --color-teks: #2b2118;
 }
+
+/* Mode gelap (data-mode="gelap"): Terang / Gelap / Ikut sistem dipilih di Pengaturan atau side menu. Ada untuk kedua tema.
+   --aksen-teks dan --galat-teks: warna teks yang lebih terang untuk class text-sage-gelap / text-terakota,
+   karena token itu di mode gelap dipakai sebagai latar tombol (bertulisan putih). */
+html[data-mode='gelap'] {
+  color-scheme: dark;
+  --color-krem: #151012;
+  --color-kartu: #201a1d;
+  --color-sage: #8c7f7a;
+  --color-sage-gelap: #9b2f45;
+  --color-terakota: #b8394f;
+  --color-emas: #5a4a22;
+  --color-kurang: #3b1e25;
+  --color-siap: #262b22;
+  --color-waktu: #f4ede6;
+  --color-teks: #f1ebe5;
+  --aksen-teks: #e58ca0;
+  --galat-teks: #f2a0ae;
+  --color-neutral-300: #5b5350;
+  --color-neutral-400: #8a8280;
+  --color-neutral-500: #a89f9b;
+  --color-neutral-600: #bfb7b3;
+  --color-neutral-700: #d3ccc8;
+  --color-neutral-800: #e6e0dc;
+  --color-neutral-900: #f2ede9;
+}
+html[data-mode='gelap'][data-tema='adonan'] {
+  --color-krem: #14130f;
+  --color-kartu: #1e1c17;
+  --color-sage: #7d9470;
+  --color-sage-gelap: #4e7347;
+  --color-terakota: #b9553a;
+  --color-emas: #5b4a22;
+  --color-kurang: #3a2119;
+  --color-siap: #25301f;
+  --color-waktu: #f3eee4;
+  --color-teks: #eee8dd;
+  --aksen-teks: #a9c79b;
+  --galat-teks: #f0a58c;
+}
+html[data-mode='gelap'] .text-sage-gelap,
+html[data-mode='gelap'] .hover\:text-sage-gelap:hover { color: var(--aksen-teks); }
+html[data-mode='gelap'] .text-terakota { color: var(--galat-teks); }
 
 body {
   background: var(--color-krem);
-  color: #2b2118;
+  color: var(--color-teks);
   font-family: var(--font-sans);
 }
 
@@ -27,9 +86,25 @@ body {
 html { accent-color: var(--color-sage-gelap); }
 * { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--color-sage-gelap) 30%, transparent) transparent; }
 input, textarea { caret-color: var(--color-terakota); }
+/* Tailwind v4 membiarkan tombol berkursor panah; semua kontrol yang bisa ditekan harus berkursor tangan. */
+button:not(:disabled), [role='button']:not([aria-disabled='true']), summary { cursor: pointer; }
 /* Baris geser horizontal (chip, rak kartu): tanpa bilah scroll, tetap bisa digeser. */
 .tanpa-bar { scrollbar-width: none; }
 .tanpa-bar::-webkit-scrollbar { display: none; }
+
+/* Navigasi: masuk, ikon melenting saat dipilih, lembar & side menu meluncur. Semua mati otomatis bila gerak dikurangi. */
+@keyframes turun { from { opacity: 0; transform: translateY(-28px) scale(0.96); } to { opacity: 1; transform: none; } }
+@keyframes naik-bawah { from { opacity: 0; transform: translateY(44px); } to { opacity: 1; transform: none; } }
+@keyframes lenting { 0% { transform: scale(0.8); } 55% { transform: scale(1.2); } 100% { transform: scale(1); } }
+@keyframes pudar { from { opacity: 0; } to { opacity: 1; } }
+@keyframes geser-naik { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: none; } }
+@keyframes masuk-kiri { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
+.animate-turun { animation: turun 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-naik-bawah { animation: naik-bawah 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-lenting { animation: lenting 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.animate-pudar { animation: pudar 0.25s ease-out both; }
+.animate-geser-naik { animation: geser-naik 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-masuk-kiri { animation: masuk-kiri 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
 /* Satu momen bergerak: kartu resep di Beranda naik bergantian. */
 @keyframes naik { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }

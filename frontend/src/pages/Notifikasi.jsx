@@ -45,7 +45,7 @@ export default function Notifikasi() {
         {d?.daftar.map((i) => (
           <li key={i.id}>
             <button onClick={() => buka(i)} className={`flex w-full items-start gap-3 rounded-2xl p-3 text-left ${i.dibaca ? 'bg-kartu' : 'bg-siap'}`}>
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white text-sage-gelap" aria-hidden>{(() => { const Ikon = IKON[i.jenis] ?? IkonLonceng; return <Ikon className="size-5" /> })()}</span>
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-kartu text-sage-gelap" aria-hidden>{(() => { const Ikon = IKON[i.jenis] ?? IkonLonceng; return <Ikon className="size-5" /> })()}</span>
               <span className="min-w-0 flex-1">
                 <span className="flex items-center gap-2 font-medium">{i.judul}{!i.dibaca && <span className="size-2 rounded-full bg-terakota" aria-label="Belum dibaca" />}</span>
                 {i.isi && <span className="block text-sm text-neutral-600">{i.isi}</span>}

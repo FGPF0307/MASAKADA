@@ -41,8 +41,8 @@ export default function StepLangkah() {
               <div className="flex items-center justify-between gap-2">
                 <h2 className="font-judul text-lg font-bold">{b.langkahKe(i + 1)}</h2>
                 <div className="flex gap-1">
-                  <button disabled={i === 0} onClick={() => geser(i, -1)} aria-label={b.naik} className="size-9 rounded-lg border border-black/10 disabled:opacity-30">↑</button>
-                  <button disabled={i === draf.langkah.length - 1} onClick={() => geser(i, 1)} aria-label={b.turun} className="size-9 rounded-lg border border-black/10 disabled:opacity-30">↓</button>
+                  <button disabled={i === 0} onClick={() => geser(i, -1)} aria-label={b.naik} className="size-9 rounded-lg border border-teks/10 disabled:opacity-30">↑</button>
+                  <button disabled={i === draf.langkah.length - 1} onClick={() => geser(i, 1)} aria-label={b.turun} className="size-9 rounded-lg border border-teks/10 disabled:opacity-30">↓</button>
                   <button onClick={() => set(draf.langkah.filter((_, n) => n !== i))} aria-label={`${b.hapusLangkah} ${i + 1}`} className="flex size-9 items-center justify-center rounded-lg border border-terakota/40 text-terakota"><IkonTutup className="size-4" /></button>
                 </div>
               </div>
@@ -53,7 +53,7 @@ export default function StepLangkah() {
               </div>
               <label className="block space-y-1">
                 <span className="text-sm text-neutral-600">{b.instruksi}</span>
-                <textarea rows={3} maxLength={1000} value={l.instruksi} onChange={(e) => ubahLangkah(i, { instruksi: e.target.value })} className={`w-full rounded-xl border bg-white px-4 py-3 outline-none focus:border-sage ${kata ? 'border-terakota' : 'border-black/10'}`} />
+                <textarea rows={3} maxLength={1000} value={l.instruksi} onChange={(e) => ubahLangkah(i, { instruksi: e.target.value })} className={`w-full rounded-xl border bg-kartu px-4 py-3 outline-none focus:border-sage ${kata ? 'border-terakota' : 'border-teks/10'}`} />
                 {kata && <span role="alert" className="text-xs text-terakota">Takaran harus pasti: ganti "{kata}" dengan angka + satuan.</span>}
               </label>
               <label className="flex items-center gap-3 text-sm">
@@ -62,7 +62,7 @@ export default function StepLangkah() {
                   inputMode="numeric"
                   value={l.timer_menit ?? ''}
                   onChange={(e) => { const n = parseInt(e.target.value, 10); ubahLangkah(i, { timer_menit: e.target.value === '' ? null : Number.isNaN(n) ? l.timer_menit : Math.min(240, Math.max(1, n)) }) }}
-                  className="w-20 rounded-lg border border-black/10 bg-white px-3 py-2"
+                  className="w-20 rounded-lg border border-teks/10 bg-kartu px-3 py-2"
                 />
               </label>
               {draf.bahan.length > 0 && (

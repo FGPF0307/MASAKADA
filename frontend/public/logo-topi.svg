@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="512" height="512" fill="none"><defs><clipPath id="masakada-frame-clip"><rect x="0" y="0" width="120" height="120" rx="28" ry="28" /></clipPath></defs>
+    <g clip-path="url(#masakada-frame-clip)">
+      <rect x="0" y="0" width="120" height="120" rx="28" fill="#6E1F2F" />
+      <g transform="translate(16.80, 16.80) scale(0.7200)">
+        
+        <!-- Puffy Chef Toque Crown -->
+        <path
+          d="M34 65C23 65 18 56 18 47C18 37 26 30 35 31C39 21 49 16 60 16C71 16 81 21 85 31C94 30 102 37 102 47C102 56 97 65 86 65H34Z"
+          fill="#F8F5F0"
+        />
+        <!-- Clean Vertical Crown Pleats -->
+        <path
+          d="M44 37V55M60 33V55M76 37V55"
+          stroke="#6E1F2F"
+          stroke-width="5.5"
+          stroke-linecap="round"
+        />
+        <!-- Chef Hat Band -->
+        <path
+          d="M33 70H87V84C87 87.9 83.9 91 80 91H40C36.1 91 33 87.9 33 84V70Z"
+          fill="#EDE6DD"
+        />
+        <!-- Serving Platter / Rim Base -->
+        <path
+          d="M24 100H96"
+          stroke="#F8F5F0"
+          stroke-width="6.5"
+          stroke-linecap="round"
+        />
+      
+      </g>
+    </g>
+  </svg>

@@ -53,13 +53,13 @@ function Timer({ menit }) {
   }
   const habis = sisa === 0
   return (
-    <div className={`flex items-center justify-between gap-3 rounded-3xl p-5 shadow-[0_2px_10px_rgba(59,42,30,0.08)] ${habis ? 'bg-terakota text-white' : 'bg-kartu'}`}>
+    <div className={`flex items-center justify-between gap-3 rounded-3xl p-5 shadow-[0_2px_10px_rgba(27,20,22,0.08)] ${habis ? 'bg-terakota text-white' : 'bg-kartu'}`}>
       <p role="timer" aria-live="off" className="font-judul text-5xl font-bold tabular-nums">{habis ? m.waktuHabis : mmss(sisa)}</p>
       <div className="flex gap-2">
         {!habis && (
           <button onClick={jalan ? () => setJalan(false) : mulai} className="rounded-xl bg-sage-gelap px-4 py-2 text-white">{jalan ? m.jeda : m.mulai}</button>
         )}
-        <button onClick={() => { setJalan(false); setSisa(menit * 60) }} className={`rounded-xl border px-4 py-2 ${habis ? 'border-white/60' : 'border-black/10'}`}>{m.ulang}</button>
+        <button onClick={() => { setJalan(false); setSisa(menit * 60) }} className={`rounded-xl border px-4 py-2 ${habis ? 'border-white/60' : 'border-teks/10'}`}>{m.ulang}</button>
       </div>
     </div>
   )
@@ -119,13 +119,13 @@ export default function MasakMode() {
           <span className="font-medium">{m.langkah(i + 1, total)}</span>
           <span className="rounded-full bg-siap px-3 py-0.5 text-sage-gelap">{t.detail.fase[l.fase]}</span>
         </div>
-        <div className="h-2.5 overflow-hidden rounded-full bg-black/10" role="progressbar" aria-valuemin={1} aria-valuemax={total} aria-valuenow={i + 1}>
+        <div className="h-2.5 overflow-hidden rounded-full bg-teks/10" role="progressbar" aria-valuemin={1} aria-valuemax={total} aria-valuenow={i + 1}>
           <div className="h-full rounded-full bg-sage-gelap transition-all" style={{ width: `${((i + 1) / total) * 100}%` }} />
         </div>
       </div>
 
       <div className="mt-5 space-y-5">
-        {l.foto_url && <img src={l.foto_url} alt="" className="aspect-[4/3] w-full rounded-3xl object-cover shadow-[0_6px_20px_rgba(59,42,30,0.14)]" />}
+        {l.foto_url && <img src={l.foto_url} alt="" className="aspect-[4/3] w-full rounded-3xl object-cover shadow-[0_6px_20px_rgba(27,20,22,0.14)]" />}
         <p className="text-2xl font-medium leading-snug lg:text-3xl">{l.instruksi}</p>
 
         {l.bahan.length > 0 && (
@@ -145,19 +145,19 @@ export default function MasakMode() {
         {l.timer_menit > 0 && <Timer key={l.urutan} menit={l.timer_menit} />}
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-black/5 bg-krem/95 px-4 py-3">
+      <div className="fixed inset-x-0 bottom-0 border-t border-teks/5 bg-krem/95 px-4 py-3">
         <div className="mx-auto flex max-w-2xl gap-3">
           <button
             onClick={() => ke(i - 1)}
             disabled={i === 0}
             aria-label={m.sebelumnya}
-            className="flex size-14 shrink-0 items-center justify-center rounded-full border border-black/10 bg-kartu transition active:scale-95 disabled:opacity-30"
+            className="flex size-14 shrink-0 items-center justify-center rounded-full border border-teks/10 bg-kartu transition active:scale-95 disabled:opacity-30"
           >
             <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 5l-7 7 7 7" /></svg>
           </button>
           <button
             onClick={() => (terakhir ? go(`/resep/${id}/selesai?porsi=${data.porsi_dipilih}`) : ke(i + 1))}
-            className="h-14 flex-1 rounded-full bg-terakota text-lg font-semibold text-white shadow-[0_6px_16px_rgba(185,85,58,0.3)] transition active:scale-[0.98]"
+            className="h-14 flex-1 rounded-full bg-terakota text-lg font-semibold text-white shadow-[0_6px_16px_color-mix(in_srgb,var(--color-terakota)_30%,transparent)] transition active:scale-[0.98]"
           >
             {terakhir ? m.selesai : m.berikutnya}
           </button>

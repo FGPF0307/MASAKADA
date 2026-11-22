@@ -66,7 +66,7 @@ export default function Ulasan() {
           {[5, 4, 3, 2, 1].map((b) => (
             <li key={b} className="flex items-center gap-2 text-xs">
               <span className="w-3 text-right">{b}</span>
-              <span className="h-2 flex-1 overflow-hidden rounded-full bg-black/10"><span className="block h-full rounded-full bg-[#f5a623]" style={{ width: `${(d.distribusi[b] / maks) * 100}%` }} /></span>
+              <span className="h-2 flex-1 overflow-hidden rounded-full bg-teks/10"><span className="block h-full rounded-full bg-[#f5a623]" style={{ width: `${(d.distribusi[b] / maks) * 100}%` }} /></span>
               <span className="w-5 text-neutral-500">{d.distribusi[b]}</span>
             </li>
           ))}
@@ -99,7 +99,7 @@ export default function Ulasan() {
           aria-label={u.tulis}
           value={teks}
           onChange={(e) => setTeks(e.target.value)}
-          className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 outline-none focus:border-sage"
+          className="w-full rounded-xl border border-teks/10 bg-kartu px-4 py-3 outline-none focus:border-sage"
         />
         <PilihFoto url={foto} onChange={setFoto} />
         <Pesan>{galat}</Pesan>

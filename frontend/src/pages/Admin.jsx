@@ -31,7 +31,7 @@ function ResepItem({ r, selesai, setGalat }) {
         <button onClick={toggle} className="shrink-0 text-sm text-sage-gelap">{buka ? a.tutup : a.buka}</button>
       </div>
       {buka && d && (
-        <div className="space-y-3 rounded-xl bg-white p-3 text-sm">
+        <div className="space-y-3 rounded-xl bg-kartu p-3 text-sm">
           {d.foto_url && <img src={d.foto_url} alt="" className="max-h-48 rounded-lg object-cover" />}
           <p>{d.deskripsi}</p>
           <p className="text-neutral-500">{d.porsi} porsi · {d.menit_persiapan} + {d.menit_memasak} mnt · {t.kesulitan[d.kesulitan]} · {d.kategori}</p>
@@ -58,7 +58,7 @@ function ResepItem({ r, selesai, setGalat }) {
         <div className="space-y-3">
           <p className="text-sm font-medium">{a.alasanPoin}</p>
           {poin.map((p, i) => (
-            <div key={i} className="space-y-2 rounded-xl bg-white p-3">
+            <div key={i} className="space-y-2 rounded-xl bg-kartu p-3">
               <Field label={`${a.judulPoin} ${i + 1}`} value={p.judul} maxLength={150} onChange={(e) => ubahPoin(i, { judul: e.target.value })} />
               <Field label={a.isiPoin} value={p.isi} maxLength={500} onChange={(e) => ubahPoin(i, { isi: e.target.value })} />
             </div>

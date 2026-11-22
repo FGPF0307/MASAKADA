@@ -28,9 +28,9 @@ function Baris({ b, onUbah, onHapus }) {
           aria-label={`${bh.jumlah} ${b.nama}`}
           value={teks}
           onChange={(e) => { setTeks(e.target.value); const n = parseAngka(e.target.value); if (n > 0 && n <= 100000) onUbah({ jumlah: n }) }}
-          className={`w-28 rounded-lg border bg-white px-3 py-2 ${salah ? 'border-terakota' : 'border-black/10'}`}
+          className={`w-28 rounded-lg border bg-kartu px-3 py-2 ${salah ? 'border-terakota' : 'border-teks/10'}`}
         />
-        <span className="w-10 rounded-lg bg-black/5 px-2 py-2 text-center text-sm">{b.satuan}</span>
+        <span className="w-10 rounded-lg bg-teks/5 px-2 py-2 text-center text-sm">{b.satuan}</span>
       </div>
       {salah && <p className="text-xs text-terakota">{t.pantry.atur.jumlahTidakValid}</p>}
       <Segmented nilai={b.peran} onChange={(peran) => onUbah({ peran })} opsi={Object.entries(t.detail.peran)} />
@@ -73,7 +73,7 @@ export default function StepBahan() {
         <ul className="space-y-2">
           {hasil?.map((x) => (
             <li key={x.id}>
-              <button onClick={() => tambah(x)} disabled={sudah.has(x.id)} className="flex w-full items-center gap-3 rounded-2xl bg-white p-3 text-left disabled:opacity-50">
+              <button onClick={() => tambah(x)} disabled={sudah.has(x.id)} className="flex w-full items-center gap-3 rounded-2xl bg-kartu p-3 text-left disabled:opacity-50">
                 <AvatarBahan nama={x.nama} className="size-10" />
                 <span className="flex-1 font-medium">{x.nama}</span>
                 <span className="text-sm text-neutral-500">{sudah.has(x.id) ? bh.sudahAda : x.satuan}</span>

@@ -50,13 +50,13 @@ export default function SheetSubstitusi({ resepId, bahan, porsi, onTutup, onMasa
 
       {hasil && (
         <>
-          {hasil.pilihan.length === 0 && <p className="rounded-xl bg-white p-4 text-sm">{s.kosong}</p>}
+          {hasil.pilihan.length === 0 && <p className="rounded-xl bg-kartu p-4 text-sm">{s.kosong}</p>}
           <ul className="space-y-2">
             {hasil.pilihan.map((p) => (
-              <li key={p.ingredient_id} className="space-y-1 rounded-xl bg-white p-3">
+              <li key={p.ingredient_id} className="space-y-1 rounded-xl bg-kartu p-3">
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-medium">{takaran(p.jumlah, p.satuan)} {p.nama}</span>
-                  <span className={`rounded-full px-2 py-0.5 text-xs ${p.punya ? 'bg-siap text-sage-gelap' : 'bg-black/5 text-neutral-600'}`}>{p.punya ? s.punya : s.tidakAda}</span>
+                  <span className={`rounded-full px-2 py-0.5 text-xs ${p.punya ? 'bg-siap text-sage-gelap' : 'bg-teks/5 text-neutral-600'}`}>{p.punya ? s.punya : s.tidakAda}</span>
                 </div>
                 {p.catatan && <p className="text-sm text-neutral-600">{p.catatan}</p>}
                 <span className="inline-block rounded-full bg-emas px-2 py-0.5 text-[10px] font-semibold">{s.saranAI}</span>

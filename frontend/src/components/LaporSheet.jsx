@@ -43,7 +43,7 @@ export default function LaporSheet({ target, onTutup }) {
             <h2 className="font-judul text-xl font-bold">{l.judul}</h2>
             <div role="radiogroup" aria-label={l.judul} className="space-y-2">
               {l.alasan.map((a) => (
-                <label key={a} className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 ${alasan === a ? 'border-sage-gelap bg-siap' : 'border-black/10 bg-white'}`}>
+                <label key={a} className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 ${alasan === a ? 'border-sage-gelap bg-siap' : 'border-teks/10 bg-kartu'}`}>
                   <input type="radio" name="alasan" value={a} checked={alasan === a} onChange={() => setAlasan(a)} className="accent-sage-gelap" />
                   {a}
                 </label>
@@ -51,7 +51,7 @@ export default function LaporSheet({ target, onTutup }) {
             </div>
             <label className="block space-y-1">
               <span className="text-sm text-neutral-600">{l.catatan}</span>
-              <textarea rows={3} maxLength={500} value={catatan} onChange={(e) => setCatatan(e.target.value)} className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 outline-none focus:border-sage" />
+              <textarea rows={3} maxLength={500} value={catatan} onChange={(e) => setCatatan(e.target.value)} className="w-full rounded-xl border border-teks/10 bg-kartu px-4 py-3 outline-none focus:border-sage" />
             </label>
             <p className="text-sm text-neutral-500">{l.info}</p>
             <Pesan>{galat}</Pesan>

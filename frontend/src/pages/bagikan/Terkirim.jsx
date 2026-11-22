@@ -13,7 +13,7 @@ export default function Terkirim() {
       <p className="rounded-2xl bg-kartu px-4 py-3 text-sm">{k.poin}</p>
       <div className="space-y-3">
         <Link to="/" className="block rounded-xl bg-terakota py-3 font-medium text-white">{k.beranda}</Link>
-        <Link to="/resep-saya" className="block rounded-xl border border-black/10 bg-kartu py-3">{k.resepSaya}</Link>
+        <Link to="/resep-saya" className="block rounded-xl border border-teks/10 bg-kartu py-3">{k.resepSaya}</Link>
       </div>
     </div>
   )

@@ -46,7 +46,7 @@ export function UmpanProvider({ children }) {
           <h2 className="font-judul text-xl font-bold">{dialog.judul}</h2>
           {dialog.isi && <p className="text-neutral-600">{dialog.isi}</p>}
           <div className="flex gap-3">
-            <button autoFocus onClick={() => jawab(false)} className="flex-1 rounded-xl border border-black/10 bg-white py-3 font-medium">{dialog.tetap ?? u.batal}</button>
+            <button autoFocus onClick={() => jawab(false)} className="flex-1 rounded-xl border border-teks/10 bg-kartu py-3 font-medium">{dialog.tetap ?? u.batal}</button>
             <button onClick={() => jawab(true)} className="flex-1 rounded-xl bg-terakota py-3 font-medium text-white">{dialog.ya ?? u.ya}</button>
           </div>
         </Sheet>

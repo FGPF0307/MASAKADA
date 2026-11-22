@@ -5,7 +5,7 @@ export const Field = ({ label, ...props }) => (
     <span className="text-sm text-neutral-600">{label}</span>
     <input
       {...props}
-      className="mt-1 w-full rounded-xl border border-black/10 bg-white px-4 py-3 outline-none focus:border-sage"
+      className="mt-1 w-full rounded-xl border border-teks/10 bg-kartu px-4 py-3 outline-none focus:border-sage"
     />
   </label>
 )
@@ -13,7 +13,7 @@ export const Field = ({ label, ...props }) => (
 const warna = {
   terakota: 'bg-terakota text-white',
   sage: 'bg-sage-gelap text-white',
-  garis: 'bg-kartu border border-black/10 text-neutral-800',
+  garis: 'bg-kartu border border-teks/10 text-neutral-800',
 }
 export const Tombol = ({ variant = 'terakota', className = '', ...props }) => (
   <button

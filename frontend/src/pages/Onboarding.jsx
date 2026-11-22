@@ -33,7 +33,7 @@ export default function Onboarding() {
       <div className="w-full space-y-3">
         <div className="flex justify-center gap-2" aria-hidden>
           {t.onboarding.slide.map((_, n) => (
-            <span key={n} className={`h-2 rounded-full ${n === i ? 'w-6 bg-sage-gelap' : 'w-2 bg-black/15'}`} />
+            <span key={n} className={`h-2 rounded-full ${n === i ? 'w-6 bg-sage-gelap' : 'w-2 bg-teks/15'}`} />
           ))}
         </div>
         {terakhir ? (

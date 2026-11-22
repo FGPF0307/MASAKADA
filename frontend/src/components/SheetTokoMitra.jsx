@@ -35,7 +35,7 @@ export default function SheetTokoMitra({ bahan, onTutup }) {
 
         <ul className="space-y-2">
           {mitra.map((x) => (
-            <li key={x.id} className="flex items-center justify-between gap-3 rounded-xl bg-white p-3">
+            <li key={x.id} className="flex items-center justify-between gap-3 rounded-xl bg-kartu p-3">
               <span>
                 <span className="block font-medium">{x.nama}</span>
                 <span className="block text-sm text-neutral-500">{x.keterangan}</span>
