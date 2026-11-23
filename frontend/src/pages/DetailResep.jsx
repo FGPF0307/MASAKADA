@@ -14,7 +14,7 @@ import TombolKembali from '../components/TombolKembali'
 import { t } from '../copy/id'
 import { useUmpan } from '../components/Umpan'
 import { f } from '../copy/fitur'
-import { u } from '../copy/prinsip'
+import { u } from '../copy/umpan'
 import { angka, takaran } from '../lib/format'
 
 const Kotak = ({ judul, isi }) => (

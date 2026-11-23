@@ -5,7 +5,7 @@ import KartuResep from '../components/KartuResep'
 import { Chip } from '../components/Pilihan'
 import { useUmpan } from '../components/Umpan'
 import { f } from '../copy/fitur'
-import { u } from '../copy/prinsip'
+import { u } from '../copy/umpan'
 
 // Favorit & koleksi (spesifikasi 8.11 #40). Koleksi gratis; batas 20 per pengguna.
 export default function Favorit() {

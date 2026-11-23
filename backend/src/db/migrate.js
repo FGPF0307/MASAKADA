@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { readdirSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { isiKalori } from './kalori.js'
-import { seed } from './seed/seed.js'
+import { seed, sinkronResep } from './seed/seed.js'
 
 const dir = fileURLToPath(new URL('./migrations/', import.meta.url))
 // pg.Pool memakai query() untuk multi-statement tanpa parameter; PGlite memakai exec().
@@ -26,7 +26,10 @@ if (process.argv[1]?.endsWith('migrate.js')) {
   try {
     console.log('Migrasi baru:', (await migrate(pool)).join(', ') || '(tidak ada)')
     await isiKalori(pool) // database yang sudah di-seed sebelum tabel kalori ada
-    if (process.argv.includes('--seed')) console.log((await seed(pool)) ? 'Seed selesai.' : 'Seed dilewati (data sudah ada).')
+    if (process.argv.includes('--seed')) {
+      if (await seed(pool)) console.log('Seed selesai.')
+      else console.log(`Data sudah ada; resep demo disinkronkan (${await sinkronResep(pool)} resep baru).`)
+    }
   } finally {
     await pool.end()
   }

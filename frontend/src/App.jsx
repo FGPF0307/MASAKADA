@@ -3,7 +3,6 @@ import { Pesan, Tombol } from './components/Form'
 import Layout from './components/Layout'
 import { ErrorBoundary } from './components/Kondisi'
 import { UmpanProvider } from './components/Umpan'
-import Prinsip from './pages/Prinsip'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { PreferencesProvider, usePreferences } from './context/PreferencesContext'
 import { t } from './copy/id'
@@ -73,11 +72,21 @@ function PerluSetup() {
   return <Outlet />
 }
 
-// Login wajib: tanpa sesi → onboarding (pertama kali) atau halaman masuk.
+// Tanpa sesi: pertama kali → onboarding. Setelah itu tamu boleh melihat-lihat halaman di dalam Layout;
+// isinya dikunci oleh GerbangTamu (Layout). Setup dan mode memasak tetap wajib login.
 function Terproteksi() {
   const { session, memuat } = useAuth()
+  const { pathname } = useLocation()
   if (memuat) return null
-  if (!session) return <Navigate to={sudahOnboarding() ? '/masuk' : '/onboarding'} replace />
+  if (!session) {
+    if (!sudahOnboarding()) return <Navigate to="/onboarding" replace />
+    if (pathname.startsWith('/setup') || /^\/resep\/[^/]+\/(masak|selesai)/.test(pathname)) return <Navigate to="/masuk" replace />
+    return (
+      <PreferencesProvider>
+        <Outlet />
+      </PreferencesProvider>
+    )
+  }
   return (
     <PreferencesProvider>
       <PerluSetup />
@@ -86,10 +95,12 @@ function Terproteksi() {
 }
 
 // Halaman akun hanya untuk tamu; yang sudah masuk diarahkan ke Beranda.
+// Kembali ke halaman yang tadi dituju (state.dari dari AjakMasuk).
 function Tamu() {
   const { session, memuat } = useAuth()
+  const { state } = useLocation()
   if (memuat) return null
-  return session ? <Navigate to="/" replace /> : <Outlet />
+  return session ? <Navigate to={state?.dari ?? '/'} replace /> : <Outlet />
 }
 
 export default function App() {
@@ -139,7 +150,6 @@ export default function App() {
               <Route path="workshop/:id/daftar" element={<WorkshopDaftar />} />
               <Route path="profil" element={<Profil />} />
               <Route path="pengaturan" element={<Pengaturan />} />
-              <Route path="prinsip-desain" element={<Prinsip />} />
               <Route path="bagikan/terkirim" element={<Terkirim />} />
               <Route path="bagikan" element={<Bagikan />}>
                 <Route path="info" element={<StepInfo />} />

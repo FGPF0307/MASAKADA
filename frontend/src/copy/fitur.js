@@ -24,7 +24,6 @@ export const f = {
     riwayat: 'Riwayat memasak',
     workshop: 'Workshop',
     pengaturan: 'Pengaturan',
-    prinsip: 'Prinsip desain',
     admin: 'Antrean moderasi',
   },
   tema: { judul: 'Tema warna', opsi: [['ivory', 'Ivory Burgundy'], ['adonan', 'Adonan Hangat']] },

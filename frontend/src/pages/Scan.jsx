@@ -8,7 +8,7 @@ import { usePreferences } from '../context/PreferencesContext'
 import { t } from '../copy/id'
 import { useUmpan } from '../components/Umpan'
 import { f } from '../copy/fitur'
-import { u } from '../copy/prinsip'
+import { u } from '../copy/umpan'
 import { kompresFoto } from '../lib/kompresFoto'
 import { parseAngka } from '../lib/format'
 

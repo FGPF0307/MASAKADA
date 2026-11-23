@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
-import { u } from '../copy/prinsip'
+import { u } from '../copy/umpan'
 import Sheet from './Sheet'
 
 const Ctx = createContext(null)

@@ -1,0 +1,7 @@
+# Rahasia & hasil build — jangan di-commit
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+*.log

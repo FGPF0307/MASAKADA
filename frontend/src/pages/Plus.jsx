@@ -6,7 +6,7 @@ import TombolKembali from '../components/TombolKembali'
 import { usePreferences } from '../context/PreferencesContext'
 import { useUmpan } from '../components/Umpan'
 import { f } from '../copy/fitur'
-import { u } from '../copy/prinsip'
+import { u } from '../copy/umpan'
 
 // Paywall MasakAda Plus (spesifikasi 8.12 #45). Pembayaran disimulasikan.
 export default function Plus() {

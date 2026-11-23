@@ -6,7 +6,7 @@ import { urlFotoValid } from '../services/storage.js'
 import { validasi } from '../services/validasi.js'
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
-const KATEGORI = ['Rice cooker', 'Mi', 'Sup', 'Nasi', 'Lauk', 'Camilan']
+const KATEGORI = ['Rice cooker', 'Mi', 'Sup', 'Nasi', 'Lauk', 'Camilan', 'Sarapan', 'Panggang', 'Tanpa masak', 'Minuman']
 const int = (v, min, max) => Number.isInteger(v) && v >= min && v <= max
 const teks = (v, max) => typeof v === 'string' && v.length <= max
 

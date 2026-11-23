@@ -30,6 +30,9 @@ export async function statusBahan(db, userId, porsi, recipeId = null) {
   return rows.map((x) => ({ ...x, status: tentukanStatus(x) }))
 }
 
+// Kategori resep yang tidak butuh pemanas sama sekali.
+export const TANPA_MASAK = 'Tanpa masak'
+
 // Semua resep terbit + hasil hitung untuk pengguna ini.
 export async function hitungResep(db, userId, porsi) {
   const [resep, alat, status, kompor, pantry] = await Promise.all([
@@ -61,9 +64,10 @@ export async function hitungResep(db, userId, porsi) {
     const inti = bahan.filter((b) => b.peran !== 'opsional' && b.status !== 'pokok')
     const kurang = inti.filter((b) => b.status === 'tidak_ada')
     const daftarAlat = alatPer.get(r.id) ?? []
-    // Alat lain boleh diganti bila resep mencatat alternatif ("panci juga bisa"). Tanpa kompor: butuh alat sungguhan yang dimiliki.
+    // Alat lain boleh diganti bila resep mencatat alternatif ("panci juga bisa").
+    // Tanpa kompor: resep harus memakai alat pemanas lain yang dimiliki, atau memang tanpa dimasak.
     let alatOk = daftarAlat.every((a) => a.punya || a.catatan)
-    if (!punyaKompor) alatOk &&= daftarAlat.some((a) => a.punya && !a.diasumsikan_ada)
+    if (!punyaKompor && r.kategori !== TANPA_MASAK) alatOk &&= daftarAlat.some((a) => a.punya && !a.diasumsikan_ada)
     const total = r.menit_persiapan + r.menit_memasak
     return {
       id: r.id, judul: r.judul, foto_url: r.foto_url, kategori: r.kategori, porsi: r.porsi, penulis: r.penulis,

@@ -5,7 +5,7 @@ import { Pesan } from '../components/Form'
 import TombolKembali from '../components/TombolKembali'
 import { useUmpan } from '../components/Umpan'
 import { t } from '../copy/id'
-import { u } from '../copy/prinsip'
+import { u } from '../copy/umpan'
 import { takaran } from '../lib/format'
 
 // Menjaga layar tetap menyala selama memasak (Wake Lock API); diminta ulang saat tab kembali terlihat.

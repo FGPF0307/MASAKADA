@@ -4,6 +4,7 @@ import { Pesan } from '../components/Form'
 import KartuResep from '../components/KartuResep'
 import { Chip } from '../components/Pilihan'
 import TombolKembali from '../components/TombolKembali'
+import { usePreferences } from '../context/PreferencesContext'
 import { t } from '../copy/id'
 
 export default function Jelajahi() {
@@ -11,11 +12,13 @@ export default function Jelajahi() {
   const [daftar, setDaftar] = useState(null)
   const [galat, setGalat] = useState('')
   const j = t.jelajahi
+  const { profil } = usePreferences()
+  const sumber = profil.tamu ? '/publik/resep' : '/resep/jelajahi' // tamu: tanpa label kecocokan pantry
 
   useEffect(() => {
     setDaftar(null)
-    api(`/resep/jelajahi${kategori ? `?kategori=${encodeURIComponent(kategori)}` : ''}`).then(setDaftar).catch((e) => setGalat(e.message))
-  }, [kategori])
+    api(`${sumber}${kategori ? `?kategori=${encodeURIComponent(kategori)}` : ''}`).then(setDaftar).catch((e) => setGalat(e.message))
+  }, [kategori, sumber])
 
   return (
     <div className="space-y-4">
@@ -33,7 +36,7 @@ export default function Jelajahi() {
       <Pesan>{galat}</Pesan>
       {!daftar && !galat && <p className="text-neutral-500">{t.halaman.memuat}</p>}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {daftar?.map((r) => <KartuResep key={r.id} resep={r} label={r.label} />)}
+        {daftar?.map((r) => <KartuResep key={r.id} resep={r} label={profil.tamu ? undefined : r.label} />)}
       </div>
     </div>
   )

@@ -1,12 +1,17 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { api } from '../api/client'
+import { useAuth } from './AuthContext'
 
 const PreferencesContext = createContext(null)
 // eslint-disable-next-line react-refresh/only-export-components
 export const usePreferences = () => useContext(PreferencesContext)
 
-// Profil + preferensi pengguna yang sedang masuk (dipasang hanya saat ada sesi).
+// Profil pengganti untuk tamu (belum login): tidak pernah dikirim ke server.
+const PROFIL_TAMU = { tamu: true, nama: 'Tamu', paket: 'gratis', poin: 0, role: 'pengguna', setup_selesai: true, level_keahlian: 'pemula' }
+
+// Profil + preferensi pengguna yang sedang masuk. Tanpa sesi, profil = PROFIL_TAMU.
 export function PreferencesProvider({ children }) {
+  const { session } = useAuth()
   const [profil, setProfil] = useState(null)
   const [galat, setGalat] = useState('')
 
@@ -18,7 +23,7 @@ export function PreferencesProvider({ children }) {
       setGalat(e.message)
     }
   }, [])
-  useEffect(() => { muat() }, [muat])
+  useEffect(() => { if (session) muat() }, [session, muat])
 
   // Ubah di layar dulu, lalu simpan; jika gagal, muat ulang dari server.
   const perbarui = async (patch) => {
@@ -31,5 +36,6 @@ export function PreferencesProvider({ children }) {
     }
   }
 
-  return <PreferencesContext.Provider value={{ profil, galat, muat, perbarui }}>{children}</PreferencesContext.Provider>
+  const nilai = session ? { profil, galat, muat, perbarui } : { profil: PROFIL_TAMU, galat: '', muat, perbarui: async () => {} }
+  return <PreferencesContext.Provider value={nilai}>{children}</PreferencesContext.Provider>
 }

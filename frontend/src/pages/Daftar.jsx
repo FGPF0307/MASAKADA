@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Field, HalamanAkun, Pesan, Tombol } from '../components/Form'
 import { useAuth } from '../context/AuthContext'
 import { galatAuth, t } from '../copy/id'
@@ -11,9 +11,9 @@ export default function Daftar() {
   const [sandi, setSandi] = useState('')
   const [setuju, setSetuju] = useState(false)
   const [galat, setGalat] = useState('')
-  const [info, setInfo] = useState('')
   const [sibuk, setSibuk] = useState(false)
   const a = t.akun
+  const { state } = useLocation()
 
   const kirim = async (e) => {
     e.preventDefault()
@@ -21,13 +21,11 @@ export default function Daftar() {
     if (sandi.length < 8) return setGalat(t.galat.sandiPendek)
     setSibuk(true)
     try {
-      const data = await daftar(nama.trim(), email.trim(), sandi)
-      // Tanpa sesi = Supabase menunggu konfirmasi email; dengan sesi, rute tamu mengarahkan ke Beranda.
-      if (!data.session) setInfo(a.daftar.cekEmail)
+      await daftar(nama.trim(), email.trim(), sandi) // sesi baru → rute tamu langsung mengarahkan ke aplikasi
     } catch (err) {
-      setGalat(galatAuth(err))
+      setGalat(err.status ? err.message : galatAuth(err)) // galat dari server kita sudah berbahasa Indonesia
+      setSibuk(false)
     }
-    setSibuk(false)
   }
 
   return (
@@ -44,12 +42,12 @@ export default function Daftar() {
           {a.daftar.setuju}
         </label>
         <Pesan>{galat}</Pesan>
-        <Pesan jenis="info">{info}</Pesan>
         <Tombol type="submit" disabled={sibuk}>{a.daftar.tombol}</Tombol>
       </form>
       <p className="text-center text-sm text-neutral-500">{a.atau}</p>
       <Tombol variant="garis" onClick={() => google().catch((e) => setGalat(galatAuth(e)))}>{a.googleDaftar}</Tombol>
-      <p className="text-center text-sm">{a.daftar.sudah} <Link to="/masuk" className="font-medium text-terakota">{a.daftar.masuk}</Link></p>
+      <p className="text-center text-sm">{a.daftar.sudah} <Link to="/masuk" state={state} className="font-medium text-terakota">{a.daftar.masuk}</Link></p>
+      <Link to="/" className="block text-center text-sm text-neutral-500 underline">{t.tamu.lihatLihat}</Link>
     </HalamanAkun>
   )
 }

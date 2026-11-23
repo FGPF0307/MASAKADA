@@ -14,7 +14,7 @@ import { angka } from '../lib/format'
 import { tglWib } from '../lib/tampil'
 
 // HP: rak geser dengan snap; laptop: grid. Kartu masuk bergantian sekali saat Beranda terbuka.
-const RAK = 'tanpa-bar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 lg:mx-0 lg:grid lg:grid-cols-3 lg:overflow-visible lg:px-0 xl:grid-cols-4'
+const RAK = 'tanpa-bar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 px-4 pb-3 pt-1 lg:mx-0 lg:grid lg:grid-cols-3 lg:overflow-visible lg:px-0 xl:grid-cols-4'
 const KARTU = 'w-[74%] max-w-72 shrink-0 snap-start animate-naik sm:w-64 lg:w-auto lg:max-w-none'
 const BAYANGAN = 'shadow-[0_2px_12px_rgba(27,20,22,0.08)]'
 
@@ -58,7 +58,46 @@ function Unggulan({ r }) {
   )
 }
 
+// Beranda tamu: penjelasan singkat + ajakan daftar + etalase resep (tanpa rekomendasi pantry).
+function BerandaTamu() {
+  const [resep, setResep] = useState(null)
+  const s = t.tamu.beranda
+  useEffect(() => { api('/publik/resep').then(setResep).catch(() => setResep([])) }, [])
+  return (
+    <div className="relative space-y-8 lg:space-y-12">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-24 -z-10 h-80 bg-[radial-gradient(40%_75%_at_60%_0%,var(--color-emas),transparent)] opacity-50" />
+      <section className="space-y-4 rounded-[2rem] bg-sage-gelap p-6 text-white lg:p-10">
+        <h1 className="font-judul text-[2rem] font-bold leading-[1.1] lg:text-5xl">{s.judul}</h1>
+        <p className="text-white/85">{s.isi}</p>
+        <ol className="space-y-2">
+          {s.langkah.map((l, i) => (
+            <li key={l} className="flex items-center gap-3 text-sm">
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-white/15 font-semibold">{i + 1}</span>{l}
+            </li>
+          ))}
+        </ol>
+        <div className="flex flex-col gap-2 pt-2 sm:flex-row">
+          <Link to="/daftar" className="rounded-full bg-emas px-6 py-3.5 text-center font-semibold text-teks transition active:scale-[0.98]">{t.tamu.daftar}</Link>
+          <Link to="/masuk" className="rounded-full border border-white/40 px-6 py-3.5 text-center font-semibold transition active:scale-[0.98]">{t.tamu.masuk}</Link>
+        </div>
+      </section>
+      <section className="space-y-3">
+        <Judul ke="/jelajahi" label={s.semua}>{s.contoh}</Judul>
+        {!resep && <Skeleton className="aspect-[4/3] rounded-3xl" />}
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {resep?.slice(0, 8).map((r) => <KartuResep key={r.id} resep={r} />)}
+        </div>
+      </section>
+    </div>
+  )
+}
+
 export default function Beranda() {
+  const { profil } = usePreferences()
+  return profil.tamu ? <BerandaTamu /> : <BerandaMasuk />
+}
+
+function BerandaMasuk() {
   const { profil } = usePreferences()
   const { bukaMenu } = useOutletContext()
   const [data, setData] = useState(null)

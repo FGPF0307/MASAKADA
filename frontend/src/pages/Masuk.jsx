@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Field, HalamanAkun, Pesan, Tombol } from '../components/Form'
 import { useAuth } from '../context/AuthContext'
 import { galatAuth, t } from '../copy/id'
@@ -11,6 +11,7 @@ export default function Masuk() {
   const [galat, setGalat] = useState('')
   const [sibuk, setSibuk] = useState(false)
   const a = t.akun
+  const { state } = useLocation()
 
   const kirim = async (e) => {
     e.preventDefault()
@@ -35,7 +36,8 @@ export default function Masuk() {
       </form>
       <p className="text-center text-sm text-neutral-500">{a.atau}</p>
       <Tombol variant="garis" onClick={() => google().catch((e) => setGalat(galatAuth(e)))}>{a.google}</Tombol>
-      <p className="text-center text-sm">{a.masuk.baru} <Link to="/daftar" className="font-medium text-terakota">{a.masuk.buat}</Link></p>
+      <p className="text-center text-sm">{a.masuk.baru} <Link to="/daftar" state={state} className="font-medium text-terakota">{a.masuk.buat}</Link></p>
+      <Link to="/" className="block text-center text-sm text-neutral-500 underline">{t.tamu.lihatLihat}</Link>
     </HalamanAkun>
   )
 }

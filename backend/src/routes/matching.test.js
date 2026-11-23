@@ -3,6 +3,7 @@ import test from 'node:test'
 import { PGlite } from '@electric-sql/pglite'
 import { buatApp } from '../app.js'
 import { migrate } from '../db/migrate.js'
+import { resep } from '../db/seed/data.js'
 import { seed } from '../db/seed/seed.js'
 
 const db = new PGlite()
@@ -60,13 +61,12 @@ test('urutan default: paling banyak memakai bahan pantry lebih dulu', async () =
 })
 
 test('cari nama & bahan (sinonim), jelajahi per kategori dengan label', async () => {
-  assert.deepEqual(judul((await panggil('GET', '/resep/cari?q=tahu&mode=nama')).data), ['Tahu Goreng Tepung', 'Telur Dadar Tahu'])
+  assert.deepEqual(judul((await panggil('GET', '/resep/cari?q=tahu&mode=nama')).data), ['Tahu Crispy Air Fryer', 'Tahu Goreng Tepung', 'Telur Dadar Tahu'])
   const kol = (await panggil('GET', '/resep/cari?q=kubis&mode=bahan')).data // kubis = sinonim Kol
   assert.deepEqual(kol.map((x) => [x.judul, x.label]), [['Orak-arik Telur Kol', 1]])
   const rc = (await panggil('GET', '/resep/jelajahi?kategori=Rice%20cooker')).data
-  assert.equal(rc.length, 2)
-  assert.ok(rc.every((x) => x.label === 1))
-  assert.equal((await panggil('GET', '/resep/jelajahi')).data.length, 15)
+  assert.equal(rc.length, resep.filter((r) => r.kategori === 'Rice cooker').length)
+  assert.equal((await panggil('GET', '/resep/jelajahi')).data.length, resep.length)
 })
 
 test('detail resep: status tiap bahan, skala porsi, ringkasan, level penulis', async () => {
@@ -102,4 +102,23 @@ test('alat: tanpa kompor hanya resep dengan alat yang dimiliki; alatLain menampi
   const { data } = await panggil('GET', '/resep/cocok')
   assert.deepEqual(judul(data.kurang1), ['Ayam Kecap Rice Cooker', 'Tempe Kecap Rice Cooker'])
   assert.ok((await panggil('GET', '/resep/cocok?alatLain=true')).data.siap.length > 0)
+})
+
+test('alat: tanpa kompor resep tanpa masak tetap bisa; wajan dimatikan menyembunyikan resep tumis', async () => {
+  const semua = async () => Object.fromEntries((await panggil('GET', '/resep/jelajahi')).data.map((x) => [x.judul, x.butuh_alat_lain]))
+  await panggil('PUT', '/saya/alat', [{ tool_id: await tool('Kompor'), punya: false }, { tool_id: await tool('Rice cooker'), punya: false }])
+  let a = await semua()
+  assert.equal(a['Overnight Oat Pisang'], false)
+  assert.equal(a['Salad Timun Tomat'], false)
+  assert.equal(a['Nasi Goreng Telur'], true)
+  assert.equal(a['Telur Mug Microwave'], true) // belum punya microwave
+  await panggil('PUT', '/saya/alat', [{ tool_id: await tool('Microwave'), punya: true }])
+  assert.equal((await semua())['Telur Mug Microwave'], false)
+
+  await panggil('PUT', '/saya/alat', [{ tool_id: await tool('Kompor'), punya: true }, { tool_id: await tool('Wajan'), punya: false }])
+  a = await semua()
+  assert.equal(a['Tumis Bayam'], true)
+  assert.equal(a['Sup Wortel Ayam'], false) // cukup kompor + panci
+  assert.ok(!judul((await panggil('GET', '/resep/cocok')).data.siap).includes('Tumis Bayam'))
+  await panggil('PUT', '/saya/alat', [{ tool_id: await tool('Wajan'), punya: true }])
 })

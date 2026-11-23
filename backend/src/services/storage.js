@@ -18,18 +18,48 @@ export function urlFotoValid(url) {
   return base ? url.startsWith(`${base}/storage/v1/object/public/`) : /^https?:\/\//.test(url)
 }
 
-// Mengunggah ke Supabase Storage (REST) dengan kunci rahasia server; mengembalikan URL publik.
-export async function unggahFoto(buffer, tipe, userId) {
+const konfig = () => {
   const base = process.env.SUPABASE_URL
   const kunci = process.env.SUPABASE_SERVICE_KEY
-  const bucket = process.env.SUPABASE_BUCKET ?? 'foto'
   if (!base || !kunci) throw galat(503, 'Penyimpanan foto belum dikonfigurasi.')
-  const path = `${userId}/${randomUUID()}.${EKSTENSI[tipe]}`
-  const res = await fetch(`${base}/storage/v1/object/${bucket}/${path}`, {
+  return { base, bucket: process.env.SUPABASE_BUCKET ?? 'foto', h: { apikey: kunci, Authorization: `Bearer ${kunci}` } }
+}
+
+// Membuat bucket publik bila belum ada (aman dipanggil berulang). Batas 2 MB, hanya gambar.
+export async function pastikanBucket() {
+  const { base, bucket, h } = konfig()
+  const cek = await fetch(`${base}/storage/v1/bucket/${bucket}`, { headers: h })
+  if (cek.ok) return false
+  const res = await fetch(`${base}/storage/v1/bucket`, {
     method: 'POST',
-    headers: { apikey: kunci, Authorization: `Bearer ${kunci}`, 'Content-Type': tipe },
+    headers: { ...h, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: bucket, name: bucket, public: true, file_size_limit: 2 * 1024 * 1024, allowed_mime_types: Object.keys(EKSTENSI) }),
+  })
+  if (!res.ok && !(await res.text()).includes('already exists')) throw new Error(`Gagal membuat bucket ${bucket}: ${res.status}`)
+  return true
+}
+
+// Mengunggah ke Supabase Storage (REST) dengan kunci rahasia server; mengembalikan URL publik.
+// Bila bucket belum ada, bucket dibuat lalu unggahan dicoba sekali lagi.
+export async function unggahFoto(buffer, tipe, userId) {
+  const { base, bucket, h } = konfig()
+  const path = `${userId}/${randomUUID()}.${EKSTENSI[tipe]}`
+  const kirim = () => fetch(`${base}/storage/v1/object/${bucket}/${path}`, {
+    method: 'POST',
+    headers: { ...h, 'Content-Type': tipe },
     body: buffer,
   })
+  let res = await kirim()
+  if (!res.ok) {
+    const isi = await res.text()
+    if (isi.includes('Bucket not found')) {
+      await pastikanBucket()
+      res = await kirim()
+    } else {
+      console.error('Storage gagal', res.status, isi)
+      throw galat(502, 'Gagal mengunggah foto. Coba lagi sebentar.')
+    }
+  }
   if (!res.ok) {
     console.error('Storage gagal', res.status, await res.text())
     throw galat(502, 'Gagal mengunggah foto. Coba lagi sebentar.')

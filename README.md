@@ -94,6 +94,11 @@ cd frontend && npm install && npm run dev
 
 Salin `backend/.env.example` dan `frontend/.env.example` menjadi `.env`, lalu isi nilainya. Tes backend: `cd backend && npm test`.
 
+Perintah tambahan (di folder `backend`):
+- `npm run storage:setup` membuat bucket foto publik `foto` di Supabase Storage. Backend juga membuatnya otomatis saat unggahan pertama.
+- `npm run db:seed` pada database yang sudah berisi akan menyinkronkan resep demo: menambah resep baru serta memperbarui deskripsi dan alatnya.
+- `npm run db:foto` mengisi foto resep demo dari Wikimedia Commons ke bucket sendiri. Kreditnya tercatat di `backend/FOTO_KREDIT.md`. Untuk mengganti foto tertentu: `npm run db:foto -- --ganti="Tumis Bayam"`.
+
 ## Deploy
 
 - **Frontend (Vercel)**: root `frontend`, build `npm run build`, output `dist`. Isi `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, dan `VITE_API_URL` (alamat backend). `vercel.json` sudah mengatur rute SPA.

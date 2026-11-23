@@ -8,7 +8,7 @@ import TombolKembali from '../components/TombolKembali'
 import { parseAngka } from '../lib/format'
 import { useUmpan } from '../components/Umpan'
 import { t } from '../copy/id'
-import { u } from '../copy/prinsip'
+import { u } from '../copy/umpan'
 
 // Dua mode: /pantry/:id (ubah bahan di pantry) dan /pantry/tambah/:ingredientId (bahan baru ke pantry).
 export default function AturBahan() {

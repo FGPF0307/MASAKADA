@@ -23,37 +23,11 @@ export async function seed(db) {
       [nama, sin ? sin.split(',') : [], kat, sat, flag !== '', flag === 'd'],
     )
   }
-  const idBahan = Object.fromEntries((await db.query('SELECT id, nama FROM ingredients')).rows.map((r) => [r.nama, r.id]))
-  const idAlat = Object.fromEntries((await db.query('SELECT id, nama FROM tools')).rows.map((r) => [r.nama, r.id]))
-  const bahanId = (nama) => idBahan[nama] ?? Promise.reject(new Error(`Bahan tidak ada di daftar baku: ${nama}`))
-
   await db.query("INSERT INTO profiles (id, nama, poin, setup_selesai) VALUES ($1,'Sinta',145,true)", [SINTA_ID])
+  await sinkronResep(db)
 
-  for (const r of d.resep) {
-    const { rows: [{ id }] } = await db.query(
-      `INSERT INTO recipes (penulis_id, judul, deskripsi, kategori, menit_persiapan, menit_memasak, kesulitan, eksklusif, status, terbit_pada)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'terbit',now()) RETURNING id`,
-      [SINTA_ID, r.judul, r.deskripsi ?? null, r.kategori, r.persiapan, r.memasak, r.kesulitan, !!r.eksklusif],
-    )
-    for (const [nama, catatan] of r.alat ?? [])
-      await db.query('INSERT INTO recipe_tools VALUES ($1,$2,$3)', [id, idAlat[nama], catatan])
-    for (const [nama, jumlah, peran] of r.bahan)
-      await db.query('INSERT INTO recipe_ingredients VALUES ($1,$2,$3,$4)', [id, await bahanId(nama), jumlah, PERAN[peran]])
-
-    for (const [i, [fase, teks, timer]] of r.langkah.entries()) {
-      const { rows: [{ id: stepId }] } = await db.query(
-        'INSERT INTO recipe_steps (recipe_id, urutan, fase, instruksi, timer_menit) VALUES ($1,$2,$3,$4,$5) RETURNING id',
-        [id, i + 1, FASE[fase], teks, timer ?? null],
-      )
-      for (const [nama, jumlah] of r.bahan)
-        if (new RegExp(`\\b${nama}\\b`, 'i').test(teks))
-          await db.query('INSERT INTO step_ingredients VALUES ($1,$2,$3)', [stepId, idBahan[nama], jumlah])
-      for (const [nama] of r.alat ?? [])
-        if (new RegExp(`\\b${nama}\\b`, 'i').test(teks))
-          await db.query('INSERT INTO step_tools VALUES ($1,$2)', [stepId, idAlat[nama]])
-    }
-  }
-
+  const idBahan = Object.fromEntries((await db.query('SELECT id, nama FROM ingredients')).rows.map((r) => [r.nama, r.id]))
+  const bahanId = (nama) => idBahan[nama] ?? Promise.reject(new Error(`Bahan tidak ada di daftar baku: ${nama}`))
   for (const [judul, tema, pengisi, harga, kursi, hari, bahan] of d.workshop) {
     const { rows: [{ id }] } = await db.query(
       `INSERT INTO workshops (judul, tema, pengisi, harga, kursi, mulai) VALUES ($1,$2,$3,$4,$5, now() + ($6 || ' days')::interval) RETURNING id`,
@@ -63,4 +37,51 @@ export async function seed(db) {
   }
   await isiKalori(db)
   return true
+}
+
+// Menyamakan resep demo Sinta dengan data.js; aman dijalankan pada database yang sudah berisi.
+// Resep baru ditambahkan; resep lama diperbarui deskripsi, kategori, dan alatnya (langkah & bahan tidak disentuh).
+export async function sinkronResep(db) {
+  for (const [nama, dasar] of d.alat)
+    await db.query('INSERT INTO tools (nama, diasumsikan_ada) VALUES ($1,$2) ON CONFLICT (nama) DO NOTHING', [nama, dasar])
+  const idBahan = Object.fromEntries((await db.query('SELECT id, nama FROM ingredients')).rows.map((r) => [r.nama, r.id]))
+  const idAlat = Object.fromEntries((await db.query('SELECT id, nama FROM tools')).rows.map((r) => [r.nama, r.id]))
+  const bahanId = (nama) => idBahan[nama] ?? Promise.reject(new Error(`Bahan tidak ada di daftar baku: ${nama}`))
+  const ada = new Map((await db.query('SELECT id, judul FROM recipes WHERE penulis_id = $1', [SINTA_ID])).rows.map((r) => [r.judul, r.id]))
+  let baru = 0
+
+  for (const r of d.resep) {
+    let id = ada.get(r.judul)
+    if (id) {
+      await db.query('UPDATE recipes SET deskripsi = $2, kategori = $3 WHERE id = $1', [id, r.deskripsi ?? null, r.kategori])
+      await db.query('DELETE FROM recipe_tools WHERE recipe_id = $1', [id])
+      await db.query('DELETE FROM step_tools WHERE step_id IN (SELECT id FROM recipe_steps WHERE recipe_id = $1)', [id])
+    } else {
+      ;({ rows: [{ id }] } = await db.query(
+        `INSERT INTO recipes (penulis_id, judul, deskripsi, kategori, menit_persiapan, menit_memasak, kesulitan, eksklusif, status, terbit_pada)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'terbit',now()) RETURNING id`,
+        [SINTA_ID, r.judul, r.deskripsi ?? null, r.kategori, r.persiapan, r.memasak, r.kesulitan, !!r.eksklusif],
+      ))
+      baru++
+      for (const [nama, jumlah, peran] of r.bahan)
+        await db.query('INSERT INTO recipe_ingredients VALUES ($1,$2,$3,$4)', [id, await bahanId(nama), jumlah, PERAN[peran]])
+      for (const [i, [fase, teks, timer]] of r.langkah.entries()) {
+        const { rows: [{ id: stepId }] } = await db.query(
+          'INSERT INTO recipe_steps (recipe_id, urutan, fase, instruksi, timer_menit) VALUES ($1,$2,$3,$4,$5) RETURNING id',
+          [id, i + 1, FASE[fase], teks, timer ?? null],
+        )
+        for (const [nama, jumlah] of r.bahan)
+          if (new RegExp(`\\b${nama}\\b`, 'i').test(teks))
+            await db.query('INSERT INTO step_ingredients VALUES ($1,$2,$3)', [stepId, idBahan[nama], jumlah])
+      }
+    }
+    for (const [nama, catatan] of r.alat ?? [])
+      await db.query('INSERT INTO recipe_tools VALUES ($1,$2,$3)', [id, idAlat[nama], catatan ?? null])
+    const { rows: langkah } = await db.query('SELECT id, instruksi FROM recipe_steps WHERE recipe_id = $1', [id])
+    for (const l of langkah)
+      for (const [nama] of r.alat ?? [])
+        if (new RegExp(`\\b${nama}\\b`, 'i').test(l.instruksi))
+          await db.query('INSERT INTO step_tools VALUES ($1,$2) ON CONFLICT DO NOTHING', [l.id, idAlat[nama]])
+  }
+  return baru
 }

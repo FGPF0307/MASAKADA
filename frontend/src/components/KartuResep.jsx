@@ -12,6 +12,7 @@ export default function KartuResep({ resep: r, label, className = '', style }) {
   return (
     <Link
       to={`/resep/${r.id}`}
+      state={{ resep: r }}
       style={style}
       className={`group block overflow-hidden rounded-3xl bg-kartu shadow-[0_2px_10px_rgba(27,20,22,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(27,20,22,0.16)] active:scale-[0.98] ${className}`}
     >

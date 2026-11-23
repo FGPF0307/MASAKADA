@@ -10,7 +10,7 @@ import { t } from '../copy/id'
 import { useState } from 'react'
 import { useUmpan } from '../components/Umpan'
 import { f } from '../copy/fitur'
-import { u } from '../copy/prinsip'
+import { u } from '../copy/umpan'
 import { aturMode, aturTema, bacaMode, bacaTema } from '../lib/tema'
 import { aturUkuran, bacaUkuran } from '../lib/ukuranTeks'
 
@@ -48,7 +48,7 @@ export default function Pengaturan() {
       </Link>
 
       <h2 className="pt-2 font-judul text-xl font-bold">{s.memasak}</h2>
-      <Bagian judul={s.alat}><PilihAlat termasukKompor otomatis /></Bagian>
+      <Bagian judul={s.alat}><PilihAlat otomatis /></Bagian>
       <Bagian judul={s.bahanPokok}><PilihBahanPokok otomatis /></Bagian>
       <Bagian judul={s.keahlian}>
         <Segmented nilai={profil.level_keahlian} onChange={(v) => perbarui({ level_keahlian: v })} opsi={Object.entries(t.keahlian)} />
@@ -80,7 +80,6 @@ export default function Pengaturan() {
         <Segmented nilai={ukuran} onChange={(k) => { setUkuran(k); aturUkuran(k) }} opsi={u.ukuran} />
         <p className="text-xs text-neutral-500">{u.pintasan}</p>
       </Bagian>
-      <Link to="/prinsip-desain" className="block rounded-2xl bg-kartu p-4 font-medium">{u.lihatPrinsip}</Link>
 
       <h2 className="pt-2 font-judul text-xl font-bold">{s.akun}</h2>
       <Tombol variant="garis" onClick={async () => { if (await tanya(u.keluar)) keluar() }}>{t.akun.keluar}</Tombol>

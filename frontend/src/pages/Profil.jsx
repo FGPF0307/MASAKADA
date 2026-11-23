@@ -9,7 +9,7 @@ import { t } from '../copy/id'
 import { f } from '../copy/fitur'
 import { rupiah } from '../lib/tampil'
 import { useUmpan } from '../components/Umpan'
-import { u } from '../copy/prinsip'
+import { u } from '../copy/umpan'
 
 const Baris = ({ to, children, sisi }) => (
   <Link to={to} className="flex items-center justify-between gap-3 rounded-2xl bg-kartu p-4 font-medium shadow-[0_1px_6px_rgba(27,20,22,0.06)] transition active:scale-[0.99]">

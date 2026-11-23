@@ -17,16 +17,20 @@ import { buatPantry } from './routes/pantry.js'
 import { buatPencapaian } from './routes/pencapaian.js'
 import { buatResep } from './routes/resep.js'
 import { buatSaya } from './routes/saya.js'
+import { buatPublik } from './routes/publik.js'
 import { buatUnggah } from './routes/unggah.js'
 import { unggahFoto } from './services/storage.js'
 
 // db, auth, dan storage bisa diganti (dipakai test dengan Postgres memori, pengguna palsu, dan penyimpanan palsu).
-export function buatApp({ db = pool, authMw = auth, storage = unggahFoto } = {}) {
+export function buatApp({ db = pool, authMw = auth, storage = unggahFoto, buatAkun } = {}) {
   const app = express()
   app.use(cors({ origin: process.env.FRONTEND_URL ?? true }))
   app.use(express.json())
 
   app.get('/api/health', (_req, res) => res.json({ ok: true }))
+
+  // Etalase resep untuk tamu (belum login).
+  app.use('/api/publik', buatPublik(db, buatAkun))
 
   // Semua rute /api lain wajib login (spesifikasi bagian 12).
   app.use('/api', authMw)

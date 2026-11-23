@@ -1,16 +1,19 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { api } from '../api/client'
-import { useAuth } from '../context/AuthContext'
 import { usePreferences } from '../context/PreferencesContext'
 import { t } from '../copy/id'
 import { f } from '../copy/fitur'
-import { u } from '../copy/prinsip'
+import { u } from '../copy/umpan'
+import AjakMasuk, { bolehTamu } from './AjakMasuk'
+import PratinjauResepTamu from './PratinjauResepTamu'
 import * as I from './Ikon'
 import { BannerOffline } from './Kondisi'
 import Logo from './Logo'
-import { useUmpan } from './Umpan'
 import { aturMode, modeEfektif } from '../lib/tema'
+
+// Halaman detail resep (bukan /resep/siap): tamu melihat pratinjau + popup masuk.
+const RESEP_TAMU = /^\/resep\/(?!siap$)[^/]+$/
 
 const NAV = [
   { to: '/', end: true, label: t.nav.beranda, Ikon: I.IkonRumah },
@@ -29,7 +32,7 @@ const KUBU = (admin) => {
       ['/profil', m.profil, I.IkonOrang], ['/pencapaian', m.pencapaian, I.IkonPiala], ['/resep-saya', m.resepSaya, I.IkonBuku],
       ['/riwayat', m.riwayat, I.IkonJam], ['/workshop', m.workshop, I.IkonKalender], ['/notifikasi', m.notif, I.IkonLonceng],
     ]],
-    [m.grup.lain, [['/pengaturan', m.pengaturan, I.IkonFilter], ['/prinsip-desain', m.prinsip, I.IkonBintang], ...(admin ? [['/admin', m.admin, I.IkonCentang]] : [])]],
+    [m.grup.lain, [['/pengaturan', m.pengaturan, I.IkonFilter], ...(admin ? [['/admin', m.admin, I.IkonCentang]] : [])]],
   ]
 }
 
@@ -120,8 +123,6 @@ function TombolMode() {
 
 // Side menu: meluncur dari kiri, latar memudar, item masuk bergantian. Esc / ketuk latar / pindah halaman menutupnya.
 function PanelSamping({ buka, onTutup, profil, belum }) {
-  const { keluar } = useAuth()
-  const { tanya } = useUmpan()
   const { pathname } = useLocation()
   const [pasang, setPasang] = useState(false)
   const [tampil, setTampil] = useState(false)
@@ -158,6 +159,16 @@ function PanelSamping({ buka, onTutup, profil, belum }) {
           <button autoFocus onClick={onTutup} aria-label={m.tutup} className="flex size-11 items-center justify-center rounded-full bg-kartu shadow-sm transition active:scale-90"><I.IkonTutup className="size-5" /></button>
         </div>
 
+        {profil.tamu ? (
+          <Link to="/masuk" style={{ animationDelay: '100ms' }} className="animate-masuk-kiri relative mb-5 flex shrink-0 items-center gap-4 overflow-hidden rounded-3xl bg-sage-gelap p-4 text-white">
+            <span aria-hidden className="absolute -right-6 -top-8 size-28 rounded-full bg-white/10" />
+            <span className="relative flex size-14 shrink-0 items-center justify-center rounded-full bg-kartu text-sage-gelap" aria-hidden><I.IkonOrang className="size-6" /></span>
+            <span className="relative min-w-0">
+              <span className="block font-judul text-lg font-semibold">{t.tamu.kartuMenu}</span>
+              <span className="block text-sm text-white/80">{t.tamu.kartuMenuIsi}</span>
+            </span>
+          </Link>
+        ) : (
         <Link to="/profil" style={{ animationDelay: '100ms' }} className="animate-masuk-kiri relative mb-5 flex shrink-0 items-center gap-4 overflow-hidden rounded-3xl bg-sage-gelap p-4 text-white">
           <span aria-hidden className="absolute -right-6 -top-8 size-28 rounded-full bg-white/10" />
           <span className="relative flex size-14 shrink-0 items-center justify-center rounded-full bg-kartu font-judul text-xl font-bold text-sage-gelap" aria-hidden>{profil.nama.slice(0, 1).toUpperCase()}</span>
@@ -166,12 +177,13 @@ function PanelSamping({ buka, onTutup, profil, belum }) {
             <span className="block text-sm text-white/80">{t.akun.paket[profil.paket]} · {m.poin(profil.poin ?? 0)}</span>
           </span>
         </Link>
+        )}
 
         <Link to="/bagikan/info" style={{ animationDelay: '130ms' }} className="animate-masuk-kiri mb-4 flex shrink-0 items-center justify-center gap-2 rounded-2xl border border-teks/10 bg-kartu py-3.5 font-semibold transition active:scale-[0.98]">
           <I.IkonPlus className="size-5" />{m.bagikan}
         </Link>
 
-        {profil.paket !== 'plus' && (
+        {profil.paket !== 'plus' && !profil.tamu && (
           <Link to="/plus" style={{ animationDelay: '150ms' }} className="animate-masuk-kiri mb-5 flex shrink-0 items-center justify-between gap-3 rounded-2xl bg-emas px-4 py-3 text-sm font-semibold transition active:scale-[0.98]">
             {m.cobaPlus}<I.IkonPanah className="size-4" />
           </Link>
@@ -197,10 +209,6 @@ function PanelSamping({ buka, onTutup, profil, belum }) {
         </nav>
 
         <TombolMode />
-        <button onClick={async () => { if (await tanya(u.keluar)) keluar() }} style={{ animationDelay: '520ms' }} className="animate-masuk-kiri mt-1 flex min-h-12 shrink-0 items-center gap-3 rounded-2xl px-3 text-[15px] font-medium text-terakota transition hover:bg-kurang">
-          <span className="flex size-9 items-center justify-center rounded-xl bg-kurang"><I.IkonKeluar className="size-5" /></span>
-          {t.akun.keluar}
-        </button>
       </aside>
     </div>
   )
@@ -236,7 +244,7 @@ export default function Layout() {
   const tutupMenu = () => setMenu(false)
 
   // Lencana notifikasi: diperbarui tiap pindah halaman; galat tidak menghalangi navigasi.
-  useEffect(() => { api('/notifikasi').then((d) => setBelum(d.belum_dibaca)).catch(() => {}) }, [pathname])
+  useEffect(() => { if (!profil.tamu) api('/notifikasi').then((d) => setBelum(d.belum_dibaca)).catch(() => {}) }, [pathname, profil.tamu])
 
   // Pintasan untuk pengguna mahir: "/" membuka pencarian (kecuali saat sedang mengetik).
   useEffect(() => {
@@ -276,7 +284,9 @@ export default function Layout() {
       </nav>
 
       <main id="utama" tabIndex={-1} className="mx-auto w-full max-w-[1200px] px-4 py-5 pb-32 outline-none lg:px-8 lg:pb-8 lg:pt-28">
-        <Outlet context={{ bukaMenu: () => setMenu(true) }} />
+        {!profil.tamu || bolehTamu(pathname) ? <Outlet context={{ bukaMenu: () => setMenu(true) }} />
+          : RESEP_TAMU.test(pathname) ? <PratinjauResepTamu key={pathname} />
+          : <AjakMasuk key={pathname} />}
       </main>
 
       {/* HP: bilah bawah mengambang. Penanda meluncur ke tab aktif; bersembunyi saat menggulir ke bawah. */}

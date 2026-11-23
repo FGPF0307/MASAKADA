@@ -21,7 +21,7 @@ export default function Onboarding() {
     <div className="min-h-screen flex flex-col items-center justify-between px-6 py-8 max-w-md mx-auto">
       <div className="w-full flex items-center justify-between">
         <Logo />
-        <button className="text-sm text-neutral-500" onClick={() => selesai('/masuk')}>{t.onboarding.lewati}</button>
+        <button className="text-sm text-neutral-500" onClick={() => selesai('/')}>{t.onboarding.lewati}</button>
       </div>
 
       <div className="text-center space-y-4">
@@ -40,6 +40,7 @@ export default function Onboarding() {
           <>
             <Tombol onClick={() => selesai('/daftar')}>{t.onboarding.mulai}</Tombol>
             <Link to="/masuk" onClick={() => selesai('/masuk')} className="block text-center text-sm text-sage-gelap">{t.onboarding.sudahPunyaAkun}</Link>
+            <button type="button" onClick={() => selesai('/')} className="block w-full text-center text-sm text-neutral-500 underline">{t.tamu.lihatLihat}</button>
           </>
         ) : (
           <Tombol onClick={() => setI(i + 1)}>{t.onboarding.lanjut}</Tombol>
